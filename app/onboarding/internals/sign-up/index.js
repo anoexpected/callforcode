@@ -35,10 +35,11 @@ function SignUp() {
             alt="logo"
             className="logo-image"
           />
-        </div>
-       <Link href='../../welcome-to-medlink'> <section className="back">
+            <Link href='../../welcome-to-medlink'> <section className="back">
           <ArrowLeft size={32} /> Back
         </section></Link>
+        </div>
+     
         <section className="log-in">
           <h4 className="log-in">
             Already have an Account?{" "}
@@ -49,14 +50,8 @@ function SignUp() {
         </section>
       </OnboardingHeader>
       <section className="sign-up-container">
-        {/* <Image
-          height={400}
-          width={400}
-          src="/img/img1.jpg"
-          alt="sign-up-image"
-        /> */}
         <section className="join-us">
-          <h4 className="signup-title">Join Us</h4>
+          <h4 className="signup-title">Join Us today and explore features made for you</h4>
           <h4 className="signup-description">
             We cater for clinicians and patients because we believe <br /> in providing
             access for all.

@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import SignUp from '../../../internals/sign-up/index'
+import SignUp from './index'
 function page() {
   return (
     <div>

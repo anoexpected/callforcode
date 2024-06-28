@@ -1,9 +1,10 @@
 import React from 'react'
-
+import SignIn from './index.js'
+import './styles.scss'
 function page() {
   return (
     <div>
-      sign in
+    <SignIn/>
     </div>
   )
 }

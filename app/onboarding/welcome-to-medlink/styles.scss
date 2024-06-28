@@ -176,4 +176,15 @@
   font-weight: bold;
   text-align: center;
 }
+.feature-img{
+  height: auto;
+  width: 100%;
+  max-height: 400px;
+}
+.feature-modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 ////////////////

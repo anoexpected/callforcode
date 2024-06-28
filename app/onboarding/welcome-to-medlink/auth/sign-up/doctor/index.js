@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../../../internals/header/index";
 import BackBtn from "../../../../../../components/Button/back";
 import Image from "next/image";
@@ -12,6 +12,8 @@ import {
   Form,
   DatePicker,
   DatePickerInput,
+  ProgressBar,
+  Heading,
 } from "@carbon/react";
 import ProgressSteps from "../progress";
 import Link from "next/link";
@@ -19,6 +21,8 @@ import { ArrowRight, ArrowLeft } from "@carbon/icons-react";
 
 function Doctor() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [progress, setProgress] = useState(0);
   const totalSteps = 4;
 
   const handleNext = () => {
@@ -33,10 +37,25 @@ function Doctor() {
     }
   };
 
-  const handleSubmit = () => {
-    // handle form submission
-    alert("Form submitted!");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
   };
+
+  useEffect(() => {
+    if (isSubmitting) {
+      let progressInterval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress >= 100) {
+            clearInterval(progressInterval);
+            window.location.href = "/home"; // Redirect to home after submission
+            return 100;
+          }
+          return prevProgress + 1;
+        });
+      }, 30); // Adjust the interval time as needed for the desired speed
+    }
+  }, [isSubmitting]);
 
   const renderFormFields = () => {
     switch (currentStep) {
@@ -80,7 +99,7 @@ function Doctor() {
               className="inputs"
               labelText="Enter your Email"
             />
-              <TextInput
+            <TextInput
               id="text-input-2"
               type="number"
               className="inputs"
@@ -201,50 +220,74 @@ function Doctor() {
         </Header>
         <section className="reg-form">
           <div className="cont">
-          <h4 className="reg-title">Register Clinician Account</h4>
-          <h4>Please fill in your details.</h4>
-          <div className="my-form">
-            <Form aria-label="Registration form" className="form">
-              {renderFormFields()}
-              <div className="flex-btns">
-                <Button
-                  kind="secondary"
-                  size="sm"
-                  renderIcon={ArrowLeft}
-                  className="some-class"
-                  onClick={handlePrevious}
-                  disabled={currentStep === 0}
+            <h4 className="reg-title">Register Clinician Account</h4>
+            <h4>Please fill in your details.</h4>
+            <div className="my-form">
+              {isSubmitting ? (
+                <div className="signin-progress">
+                  <img
+                    src="../../../../../../logov2.svg"
+                    alt="Medlink Logo"
+                    className="logo-progress"
+                  />
+                  <Heading
+                    style={{
+                      textAlign: "center",
+                      fontWeight: "bold",
+                      fontSize: "20px",
+                    }}
+                  >
+                    Adding you into Medlink
+                  </Heading>
+                  <ProgressBar className="my-progress" label={`${progress}%`} value={progress} />
+                </div>
+              ) : (
+                <Form
+                  aria-label="Registration form"
+                  className="form"
+                  onSubmit={handleSubmit}
                 >
-                  Previous
-                </Button>
-                {currentStep < totalSteps ? (
-                  <Button
-                    kind="secondary"
-                    size="sm"
-                    renderIcon={ArrowRight}
-                    className="some-class"
-                    onClick={handleNext}
-                  >
-                    Next
-                  </Button>
-                ) : (
-                  <Button
-                    kind="primary"
-                    size="sm"
-                    className="some-class"
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </Button>
-                )}
-                <Button kind="primary" size="sm" className="some-class">
-                  Continue with Google
-                </Button>
-              </div>
-            </Form>
+                  {renderFormFields()}
+                  <div className="flex-btns">
+                    <Button
+                      kind="secondary"
+                      size="sm"
+                      renderIcon={ArrowLeft}
+                      className="some-class"
+                      onClick={handlePrevious}
+                      disabled={currentStep === 0}
+                    >
+                      Previous
+                    </Button>
+                    {currentStep < totalSteps ? (
+                      <Button
+                        kind="secondary"
+                        size="sm"
+                        renderIcon={ArrowRight}
+                        className="some-class"
+                        onClick={handleNext}
+                      >
+                        Next
+                      </Button>
+                    ) : (
+                      <Button
+                        kind="primary"
+                        size="sm"
+                        className="some-class"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    )}
+                    <Button kind="primary" size="sm" className="some-class">
+                      Continue with Google
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </div>
           </div>
-          </div>
-         
+
           <Footer />
         </section>
       </div>

@@ -1,7 +1,13 @@
 import React from "react";
 import "./styles.scss";
 import { Button, Form, Heading, Stack, TextInput } from "@carbon/react";
-import { LogoFacebook, LogoInstagram, LogoTwitter, SpellCheck } from "@carbon/icons-react";
+import {
+  LogoFacebook,
+  LogoInstagram,
+  LogoTwitter,
+  SpellCheck,
+} from "@carbon/icons-react";
+import Link from "next/link";
 function MoreEnquiry() {
   return (
     <div className="more-inquiry">
@@ -14,16 +20,40 @@ function MoreEnquiry() {
               labelText="Email Address"
               helperText="Fill to recieve news letters from Medlink on a weekly Basis."
             />
-            <Button type="submit" size="sm" renderIcon={SpellCheck} className="subscribe">
+            <Button
+              type="submit"
+              size="sm"
+              renderIcon={SpellCheck}
+              className="subscribe"
+            >
               Subscribe
             </Button>
           </Stack>
         </Form>
       </div>
       <div className="med-social-links">
-        <LogoTwitter className="logo-med" href="https://twitter.com" style={{color:"#008AD8"}} size={64}/>
-        <LogoInstagram href="https://instagram.com" className="logo-med" style={{color:"#d62976"}} size={64}/>
-        <LogoFacebook href="https://facebook.com" className="logo-med" style={{color:"#1877f2"}} size={64}/>
+        <Link href="https://twitter.com">
+          <LogoTwitter
+          target="_blank"
+            className="logo-med"
+            style={{ color: "#008AD8" }}
+            size={64}
+          />
+        </Link>
+        <Link target="_blank" href="https://instagram.com">
+          <LogoInstagram
+            className="logo-med"
+            style={{ color: "#d62976" }}
+            size={64}
+          />
+        </Link>
+        <Link target="_blank" href="https://facebook.com">
+          <LogoFacebook
+            className="logo-med"
+            style={{ color: "#1877f2" }}
+            size={64}
+          />
+        </Link>
       </div>
 
       <div className="copyright">copyright © 2024. Powered by Watson - IBM</div>

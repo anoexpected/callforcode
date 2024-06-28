@@ -143,3 +143,25 @@
   .inputs{
       margin-bottom: 20px;
   }
+
+
+  .signin-progress {
+    width: 500px;
+    height: auto;
+    box-shadow: 2px 4px 10px var(--text-color-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8); 
+  }
+  .logo-progress{
+    width: 200px;
+    height: 100px;
+  }
+  .my-progress{
+    width: 100%;
+  }

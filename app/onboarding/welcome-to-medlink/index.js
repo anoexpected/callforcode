@@ -43,12 +43,14 @@ const FeaturesModal = ({ open, setOpen }) => {
   return (
     <Modal
       modalHeading="Explore Features - You can swipe"
-      modalLabel="Medlink"
+      modalLabel="Medlink v 0.1.0"
       primaryButtonText="Skip"
       secondaryButtonText="Return"
       open={open}
       onRequestSubmit={handleSkip}
       onSecondarySubmit={handleReturn}
+      onRequestClose={handleReturn}
+      className="feature-modal"
     >
       <Carousel showThumbs={false} className="carousel">
         <div className="feature">
@@ -66,6 +68,11 @@ const FeaturesModal = ({ open, setOpen }) => {
           <p>Set reminders for your medications.</p>
           <img src="../../../auth-img/img1.jpg" />
         </div>
+        <div className="feature">
+          <h3 style={{fontWeight:"bold", fontSize:"20px", fontFamily:"ink-jet"}}>Welcome to Medlink</h3>
+          <p>Your Virtual Medical Clinic!</p>
+          <img className="feature-img" src="../../../logov2.svg" />
+        </div>
       </Carousel>
     </Modal>
   );
@@ -76,7 +83,7 @@ function Welcome() {
     <div className="welcome-page">
       <div className="welcome-body">
         <Head>
-          <title>Medlink</title>
+          <title>Medlink v 0.1.0</title>
           <meta name="description" content="Virtual Medical Clinic" />
           <link rel="icon" href="/favicon.ico" />
           <style>{"body { overflow: auto !important; }"}</style>
@@ -91,7 +98,7 @@ function Welcome() {
               zIndex: 2,
               fontWeight: "bold",
             }}
-            title="Medlink"
+            title="Medlink v 0.1.0"
             subTitle="Your Virtual Medical Clinic"
             extra={
               <Space>
