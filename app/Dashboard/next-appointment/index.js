@@ -3,12 +3,7 @@ import "./styles.scss";
 import BackButton from "../../../components/Button/back";
 import TitlePanel from "../../../components/TitlePanel";
 import NextAppCard from "../../../components/NextAppointmentCard";
-import {
-  ExpandableSearch,
-  Heading,
-  Pagination,
-  Button,
-} from "@carbon/react";
+import { ExpandableSearch, Heading, Pagination, Button } from "@carbon/react";
 import {
   Calendar,
   LogoDiscord,
@@ -17,6 +12,7 @@ import {
   PhoneVoiceFilled,
 } from "@carbon/icons-react";
 import { redirect } from "next/dist/server/api-utils";
+import Conference from "@/app/conference";
 
 const Doctor = ({
   imageSrc,
@@ -26,7 +22,16 @@ const Doctor = ({
   phone,
   twitterLink,
   speciality,
-}) => (
+}) => {
+  const handleCalls = ()=>{
+    localStorage.setItem('selectedItem', "conferencing");
+    const timeout = 2000;
+    setTimeout(() => {
+      window.location.href = "http://localhost:3000/home";
+    }, timeout);  }
+
+  return (
+ 
   <div className="doctor-tile">
     <div className="doctor-container">
       <div className="doctors-image">
@@ -47,8 +52,9 @@ const Doctor = ({
       </div>
       <div className="call-btn">
         <div className="call">
-          <PhoneVoiceFilled size={64} />
+          <PhoneVoiceFilled onClick={handleCalls} className="call-icon" size={64} />
         </div>
+      
         <div className="doctor-social-links">
           <a href={twitterLink}>
             <LogoTwitter size={32} />
@@ -63,13 +69,13 @@ const Doctor = ({
       </div>
     </div>
   </div>
-);
+  )};
 
 function NextAppointments({ handleBackToDashboard }) {
   const doctors = [
     {
       id: 1,
-      imageSrc: "../../../doctor.jpg",
+      imageSrc: "../../../doctors/doc-1.jpeg",
       name: "Dr. John Doe",
       phone: "+1234567890",
       speciality: "Cardiologist",
@@ -79,7 +85,7 @@ function NextAppointments({ handleBackToDashboard }) {
     },
     {
       id: 2,
-      imageSrc: "../../../doctor.jpg",
+      imageSrc: "../../../doctors/doc-2.jpeg",
       name: "Dr. Jane Smith",
       phone: "+0987654321",
       speciality: "Pediatrician",
@@ -89,7 +95,7 @@ function NextAppointments({ handleBackToDashboard }) {
     },
     {
       id: 3,
-      imageSrc: "../../../doctor.jpg",
+      imageSrc: "../../../doctors/doc-3.jpg",
       name: "Dr. Emily White",
       phone: "+1122334455",
       speciality: "Dermatologist",
@@ -99,7 +105,7 @@ function NextAppointments({ handleBackToDashboard }) {
     },
     {
       id: 4,
-      imageSrc: "../../../doctor.jpg",
+      imageSrc: "../../../doctors/doc-4.jpeg",
       name: "Dr. Michael Brown",
       phone: "+5566778899",
       speciality: "Neurologist",
@@ -109,7 +115,7 @@ function NextAppointments({ handleBackToDashboard }) {
     },
     {
       id: 5,
-      imageSrc: "../../../doctor.jpg",
+      imageSrc: "../../../doctors/doc-5.jpeg",
       name: "Dr. Sarah Green",
       phone: "+9988776655",
       speciality: "Oncologist",
@@ -119,7 +125,7 @@ function NextAppointments({ handleBackToDashboard }) {
     },
     {
       id: 6,
-      imageSrc: "../../../doctor.jpg",
+      imageSrc: "../../../doctors/doc-6.jpeg",
       name: "Dr. William Black",
       phone: "+6655443322",
       speciality: "Orthopedic",
@@ -131,11 +137,36 @@ function NextAppointments({ handleBackToDashboard }) {
 
   const appointments = [
     { id: 1, doctorName: "Dr. John Doe", date: "2024-06-20", time: "10:00 AM" },
-    { id: 2, doctorName: "Dr. Jane Smith", date: "2024-06-21", time: "11:00 AM" },
-    { id: 3, doctorName: "Dr. Emily White", date: "2024-06-22", time: "12:00 PM" },
-    { id: 4, doctorName: "Dr. Michael Brown", date: "2024-06-23", time: "01:00 PM" },
-    { id: 5, doctorName: "Dr. Sarah Green", date: "2024-06-24", time: "02:00 PM" },
-    { id: 6, doctorName: "Dr. William Black", date: "2024-06-25", time: "03:00 PM" },
+    {
+      id: 2,
+      doctorName: "Dr. Jane Smith",
+      date: "2024-06-21",
+      time: "11:00 AM",
+    },
+    {
+      id: 3,
+      doctorName: "Dr. Emily White",
+      date: "2024-06-22",
+      time: "12:00 PM",
+    },
+    {
+      id: 4,
+      doctorName: "Dr. Michael Brown",
+      date: "2024-06-23",
+      time: "01:00 PM",
+    },
+    {
+      id: 5,
+      doctorName: "Dr. Sarah Green",
+      date: "2024-06-24",
+      time: "02:00 PM",
+    },
+    {
+      id: 6,
+      doctorName: "Dr. William Black",
+      date: "2024-06-25",
+      time: "03:00 PM",
+    },
   ];
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -172,21 +203,64 @@ function NextAppointments({ handleBackToDashboard }) {
     indexOfFirstAppointment,
     indexOfLastAppointment
   );
+  const appointments_history = [
+    {
+      id: 1,
+      image: "../../../doctors/doc-1.jpeg",
+      name: "Ian",
+      test: "Blood test",
+      date: "29th August 2023",
+    },
+    {
+      id: 2,
+
+      image: "../../../doctors/doc-2.jpeg",
+      name: "Nancy",
+      test: "Urine test",
+      date: "21th August 2023",
+    },
+    {
+      id: 3,
+
+      image: "../../../doctors/doc-3.jpeg",
+      name: "Keter",
+      test: "Semen test",
+      date: "29th May 2023",
+    },
+    {
+      id: 4,
+
+      image: "../../../doctors/doc-4.jpeg",
+      name: "George",
+      test: "Blood test",
+      date: "12th July 2023",
+    },
+    {
+      id: 5,
+
+      image: "../../../doctors/doc-5.jpeg",
+      name: "Jeniffer",
+      test: "Blood test",
+      date: "10th August 2025",
+    },
+  ];
   function BookAppointment() {
-    localStorage.setItem('selectedItem', 'Appointments');
-    
-    const timeout = 2000; 
-      setTimeout(() => {
+    localStorage.setItem("selectedItem", "Appointments");
+
+    const timeout = 2000;
+    setTimeout(() => {
       window.location.href = "http://localhost:3000/home";
     }, timeout);
   }
-  
+
   return (
     <div className="appointments-hub">
       <TitlePanel>
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <BackButton onClick={handleBackToDashboard} />
-          <Heading style={{ fontWeight: "bold" }}>Book An Appointment Today</Heading>
+          <Heading style={{ fontWeight: "bold" }}>
+            Book An Appointment Today
+          </Heading>
         </div>
         <div className="search-button">
           <ExpandableSearch
@@ -225,18 +299,31 @@ function NextAppointments({ handleBackToDashboard }) {
         page={currentDoctorPage}
         pageNumberText="Page Number"
         pageSize={itemsPerPage}
-        pageSizes={[itemsPerPage]} 
+        pageSizes={[itemsPerPage]}
         onChange={handleDoctorPageChange}
       />
 
       <div className="myAppointments-hist">
         <Heading className="nextApp-title">My Appointments</Heading>
         <section className="next-appointments">
-          {currentAppointments.map((appointment) => (
-            <NextAppCard key={appointment.id} />
+          {appointments_history.map((appointment) => (
+            <NextAppCard
+              key={appointment.id}
+              name={appointment.name}
+              test={appointment.test}
+              date={appointment.date}
+              docImage={appointment.image}
+            />
           ))}
           <div className="new-app">
-            <Button renderIcon={Calendar} iconDescription="Book Appointment" onClick={BookAppointment} size="sm">Book New Appointment</Button>
+            <Button
+              renderIcon={Calendar}
+              iconDescription="Book Appointment"
+              onClick={BookAppointment}
+              size="sm"
+            >
+              Book New Appointment
+            </Button>
           </div>
         </section>
       </div>

@@ -55,7 +55,7 @@ function Chats() {
         <div className="image-container">
           <img src="../../../chat-images/image1.png" alt="First" />
         </div>
-        <div className="image-container">
+        {/* <div className="image-container">
           <img src="../../../chat-images/image2.png" alt="Second" />
         </div>
         <div className="image-container">
@@ -63,7 +63,7 @@ function Chats() {
         </div>
         <div className="image-container">
           <img src="../../../chat-images/image4.png" alt="Fourth" />
-        </div>
+        </div> */}
         <div className="text-container">
           <div id="typing-text"></div>
         </div>

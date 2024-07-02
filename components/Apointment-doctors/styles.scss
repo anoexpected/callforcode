@@ -4,17 +4,18 @@
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    height: auto;
+    height: fit-content;
     border-radius: 10px;
     background-color: var(--secondary);
 }
 .doc-image{
     width: 100%;
-    height: 50%;
+    // height: 200px !important;
     display: flex;
     align-items: center;
     justify-content: center;
     object-fit: cover;
+    // border: 1px solid red;
 }
 .img{
     width: 100%;

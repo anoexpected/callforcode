@@ -19,6 +19,10 @@ import {
   SkipBackFilled,
   SkipForwardFilled,
 } from "@carbon/icons-react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Image from "next/image";
+
 
 function MedicalStatus({ handleBackToDashboard }) {
   const MyLists = ({ listItems }) => {
@@ -86,18 +90,18 @@ function MedicalStatus({ handleBackToDashboard }) {
                     justifyContent: "space-between",
                     gap: "10px",
                   }}
-                   className="items"
+                  className="items"
                 >
                   <img
                     src={item.image}
                     alt="item"
-                    style={{ width: "50px", height: "50px" }}
+                    className="list-image"
                   />
-                  <p  className="items">{item.description}</p>
+                  <p className="list-desc">{item.description}</p>
                 </div>
 
                 <div
-                 className="items"
+                  className="items"
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -106,9 +110,9 @@ function MedicalStatus({ handleBackToDashboard }) {
                     fontSize: "10px",
                   }}
                 >
-                  <p className="items" >{item.date}</p>
+                  <p className="items">{item.date}</p>
                   <Link
-                   className="items"
+                    className="items"
                     href="#"
                     renderIcon={() => <ArrowRight aria-label="Arrow Right" />}
                   >
@@ -137,33 +141,33 @@ function MedicalStatus({ handleBackToDashboard }) {
   // Example list items
   const listItems = [
     {
-      image: "../../vercel.svg",
-      description: "List item 1",
+      image: "../../../healthStatusImages/heart.jpeg",
+      description: "Heart",
       date: "2023-06-01",
     },
     {
-      image: "../../vercel.svg",
-      description: "List item 2",
+      image: "../../../healthStatusImages/brain.jpeg",
+      description: "Brain",
       date: "2023-06-02",
     },
     {
-      image: "../../vercel.svg",
-      description: "List item 3",
+      image: "../../../healthStatusImages/back.jpeg",
+      description: "Back",
       date: "2023-06-03",
     },
     {
-      image: "../../vercel.svg",
-      description: "List item 3",
+      image: "../../../healthStatusImages/eye.jpeg",
+      description: "Eyes",
       date: "2023-06-03",
     },
     {
-      image: "../../vercel.svg",
-      description: "List item 3",
+      image: "../../../healthStatusImages/leg.jpeg",
+      description: "Legs",
       date: "2023-06-03",
     },
     //we can later push items inside here
   ];
-
+ 
   return (
     <div className="medications-hub">
       <TitlePanel>
@@ -213,15 +217,33 @@ function MedicalStatus({ handleBackToDashboard }) {
         </div>
         <div className="body-segment">
           <div className="body-part">
-            <img
-              className="patient-image"
-              src="../human.svg"
-              alt="human body"
-            />
-            <div className="navigate-body">
-              <SkipBackFilled size={32} />
-              <SkipForwardFilled size={32} />
-            </div>
+            <Carousel>
+              <Image
+              width={50}
+              height={50}
+                className="patient-image"
+                src="../human.svg"
+                alt="human body"
+              
+              />
+              <Image
+              width={50}
+              height={50}
+                className="patient-image"
+                src="../human.svg"
+                alt="human body"
+              
+              />
+              <Image
+              width={50}
+              height={50}
+                className="patient-image"
+                src="../human.svg"
+                alt="human body"
+              
+              />
+             
+            </Carousel>
           </div>
           <div className="check-up">
             <Button kind="ghost">view checkup</Button>

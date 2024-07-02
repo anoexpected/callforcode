@@ -9,6 +9,7 @@ import ArticleCard from "../../components/Article-card";
 import Faqs from "../../components/faq-card";
 import QuickLink from "../../components/QuickLink";
 import MoreInquiry from "../../components/more-inquiry";
+import { link } from "next/link";
 
 function Help() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,39 +20,43 @@ function Help() {
   const QuickLinks = [
     {
       icon: <Chat size={32} />,
-      title: "Getting Started",
-      description: "Lorem ipsum dolor sit amet",
-      link: "https://engineerketer.dev",
+      title: "Finding the Right Doctor",
+      description: "Tips on finding a doctor specialized in your condition",
+      link: "https://health.gov/myhealthfinder/doctor-visits/regular-checkups/choosing-doctor-quick-tips",
     },
     {
       icon: <Person size={32} />,
-      title: "Know us",
-      description: "Lorem ipsum dolor sit amet",
-      link: "https://engineerketer.dev",
+      title: "Understanding Medical Tests",
+      description: "Explaining common medical tests and what they indicate",
+      link: "https://www.msdmanuals.com/professional/special-subjects/clinical-decision-making/understanding-medical-tests-and-test-results",
     },
     {
       icon: <Calendar size={32} />,
-      title: "Medlink",
-      description: "Lorem ipsum dolor sit amet",
-      link: "https://engineerketer.dev",
+      title: "Healthcare Providers Near You",
+      description:
+        "Find healthcare providers and facilities near your location",
+      link: "https://www.vezeeta.co.ke/en/doctor/all-specialities/",
     },
   ];
 
   const ArticleList = [
     {
       icon: <Chat size={32} />,
-      title: "Getting Started",
-      description: "Lorem ipsum dolor sit amet",
+      title: "Dealing with Chronic Pain",
+      description: "Effective strategies for managing chronic pain",
+      link: "https://www.merriam-webster.com/dictionary/medical#:~:text=adjective,or%20the%20practice%20of%20medicine",
     },
     {
       icon: <Person size={32} />,
-      title: "Know us",
-      description: "Lorem ipsum dolor sit amet",
+      title: "Understanding Diabetes",
+      description: "Comprehensive guide to diabetes management and care",
+      link: "https://www.diabetes.org.uk/diabetes-the-basics#:~:text=Diabetes%20is%20a%20serious%20condition,produce%20any%20insulin%20at%20all.",
     },
     {
-      icon: <Calendar size={32} />,
-      title: "Medlink",
-      description: "Lorem ipsum dolor sit amet",
+      icon: <Chat size={32} />,
+      title: "Understanding Hypertension",
+      description: "Essential information on managing high blood pressure",
+      link: "https://www.who.int/health-topics/hypertension#:~:text=Hypertension%2C%20also%20known%20as%20high,pumps%20blood%20into%20the%20vessels.",
     },
   ];
 
@@ -59,17 +64,20 @@ function Help() {
     {
       icon: <Chat size={64} />,
       title: "Getting Started",
-      description: "Lorem ipsum dolor sit amet",
+      description: "Learn how to start using Medlink effectively.",
+      link: "../getting-started",
     },
     {
       icon: <Person size={64} />,
       title: "Know us",
-      description: "Lorem ipsum dolor sit amet",
+      description: "Discover more about our team and mission.",
+      link: "../about-us",
     },
     {
       icon: <Calendar size={64} />,
       title: "Medlink",
-      description: "Lorem ipsum dolor sit amet",
+      description: "Explore the features and benefits of Medlink",
+      link: "../medlink",
     },
   ];
 
@@ -77,15 +85,16 @@ function Help() {
     {
       question: "How to get started?",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.",
+        "To get started, simply sign up on our platform and explore the available features. You can customize your profile and start using our services right away.",
     },
     {
       question: "How to book an appointment?",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.",
+        "Booking an appointment is easy! Log in to your account, navigate to the appointments section, choose your preferred date and time, and confirm your booking. You will receive a confirmation email shortly after.",
     },
     // Add more FAQs as needed
   ];
+  
 
   // Function to fetch online results based on search query
   const fetchOnlineResults = async () => {
@@ -138,31 +147,40 @@ function Help() {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
-  const filteredQuickLinks = QuickLinks.filter((link) =>
-    link.title.toLowerCase().includes(searchQuery) ||
-    link.description.toLowerCase().includes(searchQuery)
+  const filteredQuickLinks = QuickLinks.filter(
+    (link) =>
+      link.title.toLowerCase().includes(searchQuery) ||
+      link.description.toLowerCase().includes(searchQuery)
   );
 
-  const filteredArticles = ArticleList.filter((article) =>
-    article.title.toLowerCase().includes(searchQuery) ||
-    article.description.toLowerCase().includes(searchQuery)
+  const filteredArticles = ArticleList.filter(
+    (article) =>
+      article.title.toLowerCase().includes(searchQuery) ||
+      article.description.toLowerCase().includes(searchQuery)
   );
 
-  const filteredCards = cardList.filter((card) =>
-    card.title.toLowerCase().includes(searchQuery) ||
-    card.description.toLowerCase().includes(searchQuery)
+  const filteredCards = cardList.filter(
+    (card) =>
+      card.title.toLowerCase().includes(searchQuery) ||
+      card.description.toLowerCase().includes(searchQuery)
   );
 
-  const filteredFaqs = faqList.filter((faq) =>
-    faq.question.toLowerCase().includes(searchQuery) ||
-    faq.description.toLowerCase().includes(searchQuery)
+  const filteredFaqs = faqList.filter(
+    (faq) =>
+      faq.question.toLowerCase().includes(searchQuery) ||
+      faq.description.toLowerCase().includes(searchQuery)
   );
 
   return (
     <div className="help-container">
       <section className="help-header">
         <Heading
-          style={{ fontWeight: "bold", width: "50%", paddingLeft: "20px", fontSize: "25px" }}
+          style={{
+            fontWeight: "bold",
+            width: "50%",
+            paddingLeft: "20px",
+            fontSize: "25px",
+          }}
         >
           Help Center
         </Heading>
@@ -202,6 +220,7 @@ function Help() {
                   icon={card.icon}
                   title={card.title}
                   description={card.description}
+                  link={card.link}
                 />
               ))
             ) : (
@@ -219,6 +238,7 @@ function Help() {
                   icon={article.icon}
                   title={article.title}
                   description={article.description}
+                  link={article.link}
                 />
               ))
             ) : (
@@ -261,7 +281,9 @@ function Help() {
           </div>
         </section>
         <section className="more-results">
-          <Heading className="more-results-heading articles">More Results from Online</Heading>
+          <Heading className="more-results-heading articles">
+            More Results from Online
+          </Heading>
           <div className="online-results">
             {loading ? (
               <div>Fetching more results...</div>
@@ -270,12 +292,12 @@ function Help() {
             ) : onlineResults.length > 0 ? (
               <div className="result">
                 {onlineResults.map((result, index) => (
-                  <QuickLink 
-                  key={index}
-                  icon={result.icon}
-                  description={result.description}
-                  title={result.title}
-                  link={result.link}
+                  <QuickLink
+                    key={index}
+                    icon={result.icon}
+                    description={result.description}
+                    title={result.title}
+                    link={result.link}
                   />
                 ))}
               </div>

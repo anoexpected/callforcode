@@ -1,14 +1,17 @@
 import React from "react";
 import "./styles.scss";
 import { Heading } from "@carbon/react";
-function HelpCard({icon, title, description}) {
+import Link from "next/link";
+function HelpCard({ icon, title, link, description }) {
   return (
     <div className="help-card">
-      <div className="icon-section">{icon}</div>
+      <Link target="_blank" href={link}>
+        <div className="icon-section">{icon}</div>
         <Heading className="title-section">{title}</Heading>
-      <div className="description-section">
-        <p>{description}</p>
-      </div>
+        <div className="description-section">
+          <p>{description}</p>
+        </div>
+      </Link>
     </div>
   );
 }

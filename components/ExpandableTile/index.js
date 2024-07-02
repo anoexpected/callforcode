@@ -31,7 +31,7 @@ const MyExpandableTile = ({
   expanded,
   onToggleExpand,
 }) => {
-  const MyModal = () => {
+  const MyModal = ({description}) => {
     const ModalStateManager = ({
       renderLauncher: LauncherContent,
       children: ModalContent,
@@ -58,7 +58,7 @@ const MyExpandableTile = ({
           </Button>
         )}
       >
-        {({ open, setOpen }) => (
+        {({ open, setOpen, description }) => (
           <Modal
             launcherButtonRef={button}
             modalHeading="Refill your Medication"
@@ -66,7 +66,6 @@ const MyExpandableTile = ({
             primaryButtonText="Add to cart"
             secondaryButtonText="Cancel"
             open={open}
-            // size="lg"
             height="auto"
             onRequestClose={() => setOpen(false)}
           >
@@ -140,8 +139,9 @@ const MyExpandableTile = ({
                   alt="refill image"
                 />
                 <p className="refill-text">
-                  Spirulina is a biomass of cyanobacteria (blue-green algae)
-                  that can be consumed by humans and animals.{" "}
+                {description}  {/*  this description is not showing */}
+
+                
                 </p>
               </div>
             </div>
@@ -236,7 +236,7 @@ const MyExpandableTile = ({
           {description}
         </div>
         <div className="refillButton">
-          <MyModal />
+          <MyModal description />
         </div>
       </div>
     </div>

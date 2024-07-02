@@ -37,17 +37,17 @@ function MedicationHub({ handleBackToDashboard }) {
       id: "tile-1",
       heading: "Paracetamol",
       firstUseIcon: (
-        <Tooltip label="Helps Bones" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="Helps reduce pain and fever" enterDelayMs={0} leaveDelayMs={300}>
           <Favorite />
         </Tooltip>
       ),
       secondUseIcon: (
-        <Tooltip label="Helps Brain" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May aid cognitive functions" enterDelayMs={0} leaveDelayMs={300}>
           <Hearing />
         </Tooltip>
       ),
       thirdUseIcon: (
-        <Tooltip label="Helps Heart" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May have cardiovascular benefits" enterDelayMs={0} leaveDelayMs={300}>
           <BreakingChange />
         </Tooltip>
       ),
@@ -56,23 +56,23 @@ function MedicationHub({ handleBackToDashboard }) {
       AmPm: "Pm",
       daysLeft: "7",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Paracetamol is a widely used medication known for its effectiveness in reducing pain and fever. It may also have benefits for cognitive functions and cardiovascular health.",
     },
     {
       id: "tile-2",
       heading: "Ibuprofen",
       firstUseIcon: (
-        <Tooltip label="Helps Bones" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="Helps relieve pain and inflammation" enterDelayMs={0} leaveDelayMs={300}>
           <Favorite />
         </Tooltip>
       ),
       secondUseIcon: (
-        <Tooltip label="Helps Brain" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May support brain health" enterDelayMs={0} leaveDelayMs={300}>
           <Hearing />
         </Tooltip>
       ),
       thirdUseIcon: (
-        <Tooltip label="Helps Heart" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May have protective effects on the heart" enterDelayMs={0} leaveDelayMs={300}>
           <BreakingChange />
         </Tooltip>
       ),
@@ -81,23 +81,23 @@ function MedicationHub({ handleBackToDashboard }) {
       AmPm: "Am",
       daysLeft: "10",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Ibuprofen is commonly used to relieve pain and inflammation. It is also associated with potential benefits for brain health and cardiovascular protection.",
     },
     {
       id: "tile-5",
       heading: "Flagyl",
       firstUseIcon: (
-        <Tooltip label="Helps Bones" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="Antibiotic used to treat various infections" enterDelayMs={0} leaveDelayMs={300}>
           <Favorite />
         </Tooltip>
       ),
       secondUseIcon: (
-        <Tooltip label="Helps Brain" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May have neurological effects" enterDelayMs={0} leaveDelayMs={300}>
           <Hearing />
         </Tooltip>
       ),
       thirdUseIcon: (
-        <Tooltip label="Helps Heart" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May affect heart health" enterDelayMs={0} leaveDelayMs={300}>
           <BreakingChange />
         </Tooltip>
       ),
@@ -106,23 +106,23 @@ function MedicationHub({ handleBackToDashboard }) {
       AmPm: "Am",
       daysLeft: "10",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Flagyl is an antibiotic used to treat various infections. It may also have effects on neurological and cardiovascular health.",
     },
     {
       id: "tile-3",
       heading: "Piriton",
       firstUseIcon: (
-        <Tooltip label="Helps Bones" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="Antihistamine used for allergy relief" enterDelayMs={0} leaveDelayMs={300}>
           <Favorite />
         </Tooltip>
       ),
       secondUseIcon: (
-        <Tooltip label="Helps Brain" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May affect brain function" enterDelayMs={0} leaveDelayMs={300}>
           <Hearing />
         </Tooltip>
       ),
       thirdUseIcon: (
-        <Tooltip label="Helps Heart" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May impact heart health" enterDelayMs={0} leaveDelayMs={300}>
           <BreakingChange />
         </Tooltip>
       ),
@@ -131,23 +131,23 @@ function MedicationHub({ handleBackToDashboard }) {
       AmPm: "Am",
       daysLeft: "10",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Piriton is an antihistamine commonly used for allergy relief. It may also influence brain function and cardiovascular health.",
     },
     {
       id: "tile-4",
       heading: "Cetrizine",
       firstUseIcon: (
-        <Tooltip label="Helps Bones" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="Antihistamine for allergy symptoms" enterDelayMs={0} leaveDelayMs={300}>
           <Favorite />
         </Tooltip>
       ),
       secondUseIcon: (
-        <Tooltip label="Helps Brain" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May support brain health" enterDelayMs={0} leaveDelayMs={300}>
           <Hearing />
         </Tooltip>
       ),
       thirdUseIcon: (
-        <Tooltip label="Helps Heart" enterDelayMs={0} leaveDelayMs={300}>
+        <Tooltip label="May have cardiovascular benefits" enterDelayMs={0} leaveDelayMs={300}>
           <BreakingChange />
         </Tooltip>
       ),
@@ -156,10 +156,10 @@ function MedicationHub({ handleBackToDashboard }) {
       AmPm: "Am",
       daysLeft: "10",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Cetrizine is an antihistamine used to alleviate allergy symptoms. It may also promote brain health and cardiovascular well-being.",
     },
   ];
-
+  
   const pageSize = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);

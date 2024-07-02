@@ -3,10 +3,14 @@
   align-items: center;
   justify-content: flex-start;
   padding: 10px;
-  border: 1px solid var(--primary-color-2);
-  background-color: rgba(234, 234, 234, 0.91);
+  // border: 1px solid var(--primary-color-2);
+  // background-color: rgba(234, 234, 234, 0.91);
+  background-color: var(--secondary-color-2);
+  box-shadow: 2px 4px 10px var(--text-color-3);
   width: auto;
   flex-wrap: wrap;
+  border-radius: 5px;
+  margin: 20px;
 }
 .flex-modal{
   display: flex;
@@ -89,7 +93,7 @@
 }
 
 .change-tile {
-  width: 100%;
+  width: auto; //100%
 }
 
 .change-left-content {

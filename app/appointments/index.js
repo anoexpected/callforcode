@@ -7,12 +7,13 @@ import MoreEnquiry from "../../components/more-inquiry";
 
 // Sample data for doctors
 const doctorsData = [
-  { id: 1, image: "../../doctor.jpg", name: "John Doe", speciality: "Physio", rating: 4 },
-  { id: 2, image: "../../doctor.jpg", name: "Jane Smith", speciality: "Optometry", rating: 5 },
-  { id: 3, image: "../../doctor.jpg", name: "Emily Johnson", speciality: "Therapist", rating: 3 },
-  { id: 4, image: "../../doctor.jpg", name: "Michael Brown", speciality: "Surgeon", rating: 4 },
-  { id: 5, image: "../../doctor.jpg", name: "Chris Brown", speciality: "Optometry", rating: 4 },
-  { id: 6, image: "../../doctor.jpg", name: "Michael Albeart", speciality: "Therapist", rating: 4 },
+  { id: 1, image: "../../doctors/doc-1.jpeg", name: "John Doe", speciality: "Physio", rating: 4 },
+  { id: 2, image: "../../doctors/doc-2.jpeg", name: "Jane Smith", speciality: "Optometry", rating: 5 },
+  { id: 3, image: "../../doctors/doc-3.jpg", name: "Emily Johnson", speciality: "Therapist", rating: 3 },
+  { id: 4, image: "../../doctors/doc-4.jpeg", name: "Michael Brown", speciality: "Surgeon", rating: 4 },
+  { id: 5, image: "../../doctors/doc-6.jpeg", name: "Chris Brown", speciality: "Optometry", rating: 4 },
+  { id: 6, image: "../../doctors/doc-5.jpeg", name: "Michael Albeart", speciality: "Therapist", rating: 4 },
+  { id: 6, image: "../../doctors/doc-3.jpeg", name: "Keter Gilbert", speciality: "Therapist", rating: 4 },
 ];
 
 function Appointments() {

@@ -1,16 +1,19 @@
 import React from "react";
 import "./styles.scss";
 import { Heading } from "@carbon/react";
-function Article({ icon, title, description }) {
+import Link from "next/link";
+function Article({ icon, title, description, link }) {
   return (
     <div className="article-card">
-      <div className="icon-section">{icon}</div>
-      <div className="flex-info">
-        <Heading className="title-section">{title}</Heading>
-        <div className="description-section">
-          <p>{description}</p>
+      <Link target="_blank" href={link}>
+        <div className="icon-section">{icon}</div>
+        <div className="flex-info">
+          <Heading className="title-section">{title}</Heading>
+          <div className="description-section">
+            <p>{description}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

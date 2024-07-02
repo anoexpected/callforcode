@@ -4,27 +4,17 @@ import { Button, Heading } from "@carbon/react";
 import { Information, TrashCan } from "@carbon/icons-react";
 // import { ToastContainer, toast } from 'react-toastify';
 
-function NextAppCard() {
-  // const notify = ()=> toast.success('🦄 Deleted successfully!', {
-  //   position: "top-right",
-  //   autoClose: 5000,
-  //   hideProgressBar: false,
-  //   closeOnClick: true,
-  //   pauseOnHover: true,
-  //   draggable: true,
-  //   progress: undefined,
-  //   theme: "light",
-  //   // transition: Bounce,
-  //   });
+function NextAppCard({docImage, test, name, date}) {
+  
   return (
     <div className="appointment">
       <div className="appointment-image">
-        <img className="img-app" src="../../doctor.jpg" alt="appointment" />
+        <img className="img-app" src={docImage} alt="appointment" />
       </div>
       <div className="test-description">
-        <Heading className="test">Blood Test</Heading>
-        <Heading className="name">Dr. Keter</Heading>
-        <p>ADV: 29th May 2024</p>
+        <Heading className="test">{test}</Heading>
+        <Heading className="name">Dr. {name}</Heading>
+        <p>ADV: {date}</p>
       </div>
       <div className="edit-icons">
        
