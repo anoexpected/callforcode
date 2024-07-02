@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@arco-design/web-react": "^2.63.0",
     "@carbon/icons-react": "^11.42.0",
     "@carbon/react": "^1.59.0",
     "framer-motion": "^11.2.10",
@@ -20,6 +19,7 @@
     "react-chrono": "^2.6.1",
     "react-dom": "^18",
     "react-responsive-carousel": "^3.2.23",
+    "react-toastify": "^10.0.5",
     "sass": "^1.77.4",
     "styled-components": "^6.1.11",
     "swiper": "^11.1.4"
