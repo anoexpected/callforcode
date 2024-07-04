@@ -7,13 +7,55 @@ import MoreEnquiry from "../../components/more-inquiry";
 
 // Sample data for doctors
 const doctorsData = [
-  { id: 1, image: "../../doctors/doc-1.jpeg", name: "John Doe", speciality: "Physio", rating: 4 },
-  { id: 2, image: "../../doctors/doc-2.jpeg", name: "Jane Smith", speciality: "Optometry", rating: 5 },
-  { id: 3, image: "../../doctors/doc-3.jpg", name: "Emily Johnson", speciality: "Therapist", rating: 3 },
-  { id: 4, image: "../../doctors/doc-4.jpeg", name: "Michael Brown", speciality: "Surgeon", rating: 4 },
-  { id: 5, image: "../../doctors/doc-6.jpeg", name: "Chris Brown", speciality: "Optometry", rating: 4 },
-  { id: 6, image: "../../doctors/doc-5.jpeg", name: "Michael Albeart", speciality: "Therapist", rating: 4 },
-  { id: 6, image: "../../doctors/doc-3.jpeg", name: "Keter Gilbert", speciality: "Therapist", rating: 4 },
+  {
+    id: 1,
+    image: "../../doctors/doc-1.jpeg",
+    name: "John Doe",
+    speciality: "Physio",
+    rating: 4,
+  },
+  {
+    id: 2,
+    image: "../../doctors/doc-2.jpeg",
+    name: "Jane Smith",
+    speciality: "Optometry",
+    rating: 5,
+  },
+  {
+    id: 3,
+    image: "../../doctors/doc-3.jpg",
+    name: "Emily Johnson",
+    speciality: "Therapist",
+    rating: 3,
+  },
+  {
+    id: 4,
+    image: "../../doctors/doc-4.jpeg",
+    name: "Michael Brown",
+    speciality: "Surgeon",
+    rating: 4,
+  },
+  {
+    id: 5,
+    image: "../../doctors/doc-6.jpeg",
+    name: "Chris Brown",
+    speciality: "Optometry",
+    rating: 4,
+  },
+  {
+    id: 6,
+    image: "../../doctors/doc-5.jpeg",
+    name: "Michael Albeart",
+    speciality: "Therapist",
+    rating: 4,
+  },
+  {
+    id: 6,
+    image: "../../doctors/doc-3.jpeg",
+    name: "Keter Gilbert",
+    speciality: "Therapist",
+    rating: 4,
+  },
 ];
 
 function Appointments() {
@@ -35,13 +77,17 @@ function Appointments() {
     setPageSize(pageSize);
   };
 
-  const filteredDoctors = doctorsData.filter((doctor) =>
-    (selectedTag === "All" || doctor.speciality === selectedTag) &&
-    doctor.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredDoctors = doctorsData.filter(
+    (doctor) =>
+      (selectedTag === "All" || doctor.speciality === selectedTag) &&
+      doctor.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const startIndex = (currentPage - 1) * pageSize;
-  const currentDoctors = filteredDoctors.slice(startIndex, startIndex + pageSize);
+  const currentDoctors = filteredDoctors.slice(
+    startIndex,
+    startIndex + pageSize
+  );
 
   return (
     <div className="Appointments">
@@ -108,8 +154,7 @@ function Appointments() {
           size="md"
           totalItems={filteredDoctors.length}
         />
-              <MoreEnquiry/>
-
+        <MoreEnquiry />
       </section>
     </div>
   );

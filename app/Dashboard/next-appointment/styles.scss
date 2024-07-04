@@ -22,9 +22,6 @@
 
 .doctors {
   padding: 20px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
   gap: 1em;
@@ -32,17 +29,19 @@
   height: auto;
   flex-wrap: wrap;
 }
-@media screen and (max-width:1200px) {
-  .doctors{
+@media screen and (max-width: 1200px) {
+  .doctors {
     display: flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-width:100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
   }
-  
+  .doctor-tile .doctor-container {
+    width: 100%;
+  }
 }
-.doctor-tile{
+.doctor-tile {
   width: 100%;
 }
 .search-button {
@@ -92,6 +91,13 @@ width:100%;
   cursor: pointer;
   gap: 1em;
 }
+.group-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: auto;
+  width: 60%;
+}
 
 .call {
   background-color: var(--secondary-color);
@@ -106,7 +112,7 @@ width:100%;
 .call:hover {
   background-color: var(--secondary-color-2);
 }
-.call:hover > .call-icon{
+.call:hover > .call-icon {
   color: var(--primary-color);
 }
 
@@ -129,8 +135,8 @@ width:100%;
 
 .doctor-tile {
   width: 100%;
-  max-width: 500px;
-  min-width: 300px;
+  // max-width: 500px;
+  // min-width: 300px;
   position: relative;
 }
 
@@ -168,34 +174,46 @@ width:100%;
   width: 100%;
   text-align: left;
 }
+@media screen and (max-width: 380px) {
+  .group-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: auto;
+    flex-direction: column;
+  }
+}
 
 @media screen and (max-width: 760px) {
-  .doctors{
+  .group-flex {
+    width: 100%;
+  }
+  .doctors {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
   }
   .doctor-container {
-      display: flex;
-      flex-direction: column;
-      padding-bottom:20px ;
-      gap: 20px;
-      border-radius: 10px;
-  }
-  .doctor-tile{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    gap: 20px;
     border-radius: 10px;
   }
-  .doctors-image{
+  .doctor-tile {
+    border-radius: 10px;
+  }
+  .doctors-image {
     width: 100%;
     height: auto;
   }
 
-  .next-appointments .nextAppCard:nth-child(n+4) {
-      display: none;
+  .next-appointments .nextAppCard:nth-child(n + 4) {
+    display: none;
   }
-  .next-appointments{
+  .next-appointments {
     display: grid;
-    grid-template-columns: repeat(1,1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }

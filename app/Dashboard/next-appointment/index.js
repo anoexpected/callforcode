@@ -37,7 +37,8 @@ const Doctor = ({
       <div className="doctors-image">
         <img className="image" src={imageSrc} alt="doctor image" />
       </div>
-      <div className="doctors-info">
+     <div className="group-flex">
+     <div className="doctors-info">
         <Heading style={{ fontWeight: "bold" }}>{name}</Heading>
         <p>
           <span style={{ display: "inline-block", marginLeft: "20px" }}>
@@ -67,6 +68,7 @@ const Doctor = ({
           </a>
         </div>
       </div>
+     </div>
     </div>
   </div>
   )};

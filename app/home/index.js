@@ -200,7 +200,7 @@ function Container() {
                     width="150px"
                   />
                 ) : (
-                  <Button kind="secondary" className="button-transition">
+                  <Button kind="secondary" className="button-transition speak">
                     Speak to a doctor
                   </Button>
                 )}
