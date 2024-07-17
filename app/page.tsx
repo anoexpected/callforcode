@@ -5,7 +5,6 @@ import { Add, Information } from "@carbon/icons-react";
 import Image from "next/image";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
-// import "@arco-design/web-react/dist/css/arco.css";
 
 export default function Home() {
 
