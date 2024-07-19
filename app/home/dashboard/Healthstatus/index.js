@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.scss";
-import BackButton from "../../../components/Button/back";
-import TitlePanel from "../../../components/TitlePanel";
+import BackButton from "../../../../components/Button/back";
+import TitlePanel from "../../../../components/TitlePanel";
 import {
   ClickableTile,
   ContainedList,

@@ -11,8 +11,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import TitlePanel from "@/components/TitlePanel";
 import BackButton from "@/components/Button/back";
-import Timeline from "../../../components/Timeline";
-import MyExpandableTile from "../../../components/ExpandableTile";
+import Timeline from "../../../../components/Timeline";
+import MyExpandableTile from "../../../../components/ExpandableTile";
 import "./styles.scss";
 
 function MedicationHub({ handleBackToDashboard }) {

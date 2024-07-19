@@ -1,9 +1,10 @@
+"use client"
 import React from 'react'
-
+import Help from './index'
 function page() {
   return (
     <div>
-      help
+      <Help/>
     </div>
   )
 }

@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { ExpandableSearch, Heading } from "@carbon/react";
 import { Calendar, Chat, Person } from "@carbon/icons-react";
-import HelpCard from "../../components/Help-cards";
+import HelpCard from "../../../components/Help-cards";
 import "./styles.scss";
-import ArticleCard from "../../components/Article-card";
-import Faqs from "../../components/faq-card";
-import QuickLink from "../../components/QuickLink";
-import MoreInquiry from "../../components/more-inquiry";
+import ArticleCard from "../../../components/Article-card";
+import Faqs from "../../../components/faq-card";
+import QuickLink from "../../../components/QuickLink";
+import MoreInquiry from "../../../components/more-inquiry";
 import { link } from "next/link";
 
 function Help() {

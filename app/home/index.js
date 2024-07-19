@@ -16,13 +16,13 @@ import {
   Person,
   Video,
 } from "@carbon/icons-react";
-import Chats from "../chats";
-import Appointments from "../appointments";
-import Help from "../help";
-import Dashboard from "../Dashboard";
+import Chats from "./chats";
+import Appointments from "./appointments";
+import Help from "./help";
+import Dashboard from "./Dashboard";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
-import Conferencing from '../conference'
+import Conferencing from './conference'
 function Container() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

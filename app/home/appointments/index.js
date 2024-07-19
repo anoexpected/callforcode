@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./styles.scss";
 import { ExpandableSearch, Heading, Pagination, Tag } from "@carbon/react";
-import AppointmentDoctors from "../../components/Apointment-doctors";
+import AppointmentDoctors from "../../../components/Apointment-doctors";
 import { ShoppingCartClear } from "@carbon/icons-react";
-import MoreEnquiry from "../../components/more-inquiry";
+import MoreEnquiry from "../../../components/more-inquiry";
 
 // Sample data for doctors
 const doctorsData = [

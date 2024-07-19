@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import "./styles.scss";
-import FloatingCard from "../../components/floating-card";
-import { Button, Heading } from "@carbon/react";
-import Features from "../../components/Features";
-import Intergrations from "../../components/intergrations";
-import TechTrust from "../../components/Tech-trust";
-import MoreEnquiry from "../../components/more-inquiry";
-import ChatInterface from '../../components/chat/index'
+import Features from "../../../components/Features";
+import Intergrations from "../../../components/intergrations";
+import TechTrust from "../../../components/Tech-trust";
+import MoreEnquiry from "../../../components/more-inquiry";
+import ChatInterface from '../../../components/chat/index'
 function Chats() {
   useEffect(() => {
     window.watsonAssistantChatOptions = {

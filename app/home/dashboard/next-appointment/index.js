@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./styles.scss";
-import BackButton from "../../../components/Button/back";
-import TitlePanel from "../../../components/TitlePanel";
-import NextAppCard from "../../../components/NextAppointmentCard";
+import BackButton from "../../../../components/Button/back";
+import TitlePanel from "../../../../components/TitlePanel";
+import NextAppCard from "../../../../components/NextAppointmentCard";
 import { ExpandableSearch, Heading, Pagination, Button } from "@carbon/react";
 import {
   Calendar,
@@ -12,7 +12,7 @@ import {
   PhoneVoiceFilled,
 } from "@carbon/icons-react";
 import { redirect } from "next/dist/server/api-utils";
-import Conference from "@/app/conference";
+import Conference from "@/app/home/conference";
 
 const Doctor = ({
   imageSrc,
@@ -27,7 +27,7 @@ const Doctor = ({
     localStorage.setItem('selectedItem', "conferencing");
     const timeout = 2000;
     setTimeout(() => {
-      window.location.href = "http://localhost:3000/home";
+      window.location.href = "../../index.js";
     }, timeout);  }
 
   return (

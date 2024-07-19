@@ -12,7 +12,7 @@ import {
   Button,
 } from "@carbon/react";
 import { Bee } from "@carbon/icons-react";
-import Table from "../../components/Table";
+import Table from "../../../components/Table";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import HealthStatus from "./Healthstatus";
