@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./styles.scss";
 import { ExpandableSearch, Heading, Pagination, Tag } from "@carbon/react";
 import AppointmentDoctors from "../../../components/Apointment-doctors";
@@ -64,7 +64,22 @@ function Appointments() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-
+  useEffect(() => {
+    // Check if the page has already been refreshed
+    const hasRefreshed = localStorage.getItem("hasRefreshed");
+  
+    if (!hasRefreshed) {
+      // Set the flag in localStorage to indicate the page has been refreshed
+      localStorage.setItem("hasRefreshed", "true");
+      // Set the selected item to 'help'
+      localStorage.setItem("selectedItem", "appointments");
+      // Reload the page
+      window.location.reload();
+    } else {
+      // Clear the flag so it doesn't persist
+      localStorage.setItem("hasRefreshed", "true");
+    }
+  }, []);
   const handleSearchChange = (e) => setSearchTerm(e.target.value);
 
   const handleTagClick = (tag) => {
