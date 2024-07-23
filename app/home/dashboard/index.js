@@ -26,6 +26,22 @@ function Dashboard() {
   const [contentLoading, setContentLoading] = useState(false);
 
   useEffect(() => {
+    // Check if the page has already been refreshed
+    const hasRefreshed = localStorage.getItem("hasRefreshed");
+  
+    if (!hasRefreshed) {
+      // Set the flag in localStorage to indicate the page has been refreshed
+      localStorage.setItem("hasRefreshed", "true");
+      // Set the selected item to 'help'
+      localStorage.setItem("selectedItem", "dashboard");
+      // Reload the page
+      window.location.reload();
+    } else {
+      // Clear the flag so it doesn't persist
+      localStorage.setItem("hasRefreshed", "true");
+    }
+  }, []);
+  useEffect(() => {
     if (contentLoading) {
       nprogress.start();
     } else {

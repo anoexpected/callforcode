@@ -12,7 +12,7 @@ import {
   PhoneVoiceFilled,
 } from "@carbon/icons-react";
 import { redirect } from "next/dist/server/api-utils";
-import Conference from "@/app/home/conference";
+import Conference from "@/app/home/conferencing";
 
 const Doctor = ({
   imageSrc,

@@ -1,5 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Header from "../../../../internals/header/index";
 import BackBtn from "../../../../../../components/Button/back";
 import Image from "next/image";
@@ -15,7 +18,7 @@ import {
   ProgressBar,
   Heading,
 } from "@carbon/react";
-import ProgressSteps from "../progress";
+import {DoctorProgressSteps} from "../progress";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "@carbon/icons-react";
 
@@ -40,22 +43,32 @@ function Doctor() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    Swal.fire({
+      title: 'Adding you to Medlink',
+      text: 'Please wait...',
+      imageUrl: '/logov2.svg',
+      imageWidth: 70,
+      imageHeight: 70,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        let progressInterval = setInterval(() => {
+          setProgress((prevProgress) => {
+            if (prevProgress >= 100) {
+              clearInterval(progressInterval);
+              Swal.close();
+              toast.success('Registration successful!');
+              window.location.href = "/home"; // Redirect to home after submission
+              return 100;
+            }
+            return prevProgress + 1;
+          });
+        }, 30);
+      }
+    });
   };
-
-  useEffect(() => {
-    if (isSubmitting) {
-      let progressInterval = setInterval(() => {
-        setProgress((prevProgress) => {
-          if (prevProgress >= 100) {
-            clearInterval(progressInterval);
-            window.location.href = "/home"; // Redirect to home after submission
-            return 100;
-          }
-          return prevProgress + 1;
-        });
-      }, 30); // Adjust the interval time as needed for the desired speed
-    }
-  }, [isSubmitting]);
 
   const renderFormFields = () => {
     switch (currentStep) {
@@ -70,7 +83,7 @@ function Doctor() {
             />
             <Select
               className="inputs"
-              id={`select-3`}
+              id="select-3"
               labelText="Select your city"
               defaultValue="option-3"
             >
@@ -80,7 +93,7 @@ function Doctor() {
             </Select>
             <Select
               className="inputs"
-              id={`select-3`}
+              id="select-3"
               labelText="Select your Country"
               defaultValue="Kenya"
             >
@@ -105,18 +118,10 @@ function Doctor() {
               className="inputs"
               labelText="Enter your Phone Number"
             />
-            <DatePicker
-              datePickerType="single"
-              onChange={function noRefCheck() {}}
-              onClose={function noRefCheck() {}}
-              onOpen={function noRefCheck() {}}
-            >
+            <DatePicker datePickerType="single">
               <DatePickerInput
                 id="date-picker-single"
                 labelText="Date of Birth"
-                onChange={function noRefCheck() {}}
-                onClose={function noRefCheck() {}}
-                onOpen={function noRefCheck() {}}
                 placeholder="mm/dd/yyyy"
               />
             </DatePicker>
@@ -133,7 +138,7 @@ function Doctor() {
             />
             <Select
               className="inputs"
-              id={`select-4`}
+              id="select-4"
               labelText="Select your Gender"
               defaultValue="option-1"
             >
@@ -160,7 +165,7 @@ function Doctor() {
             />
             <Select
               className="inputs"
-              id={`select-4`}
+              id="select-4"
               labelText="Select your Gender"
               defaultValue="option-1"
             >
@@ -194,10 +199,10 @@ function Doctor() {
 
   return (
     <div className="patient-reg">
+      <ToastContainer />
       <div className="reg-body">
         <Header>
           <section className="flex-left">
-            {" "}
             <Image
               width={70}
               height={70}
@@ -225,21 +230,7 @@ function Doctor() {
             <div className="my-form">
               {isSubmitting ? (
                 <div className="signin-progress">
-                  <img
-                    src="../../../../../../logov2.svg"
-                    alt="Medlink Logo"
-                    className="logo-progress"
-                  />
-                  <Heading
-                    style={{
-                      textAlign: "center",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    Adding you into Medlink
-                  </Heading>
-                  <ProgressBar className="my-progress" label={`${progress}%`} value={progress} />
+                  {/* SweetAlert will handle the progress notification */}
                 </div>
               ) : (
                 <Form
@@ -279,20 +270,16 @@ function Doctor() {
                         Submit
                       </Button>
                     )}
-                    <Button kind="primary" size="sm" className="some-class">
-                      Continue with Google
-                    </Button>
                   </div>
                 </Form>
               )}
             </div>
           </div>
-
           <Footer />
         </section>
       </div>
       <section className="reg-progress">
-        <ProgressSteps currentStep={currentStep} />
+        <DoctorProgressSteps currentStep={currentStep} />
       </section>
     </div>
   );

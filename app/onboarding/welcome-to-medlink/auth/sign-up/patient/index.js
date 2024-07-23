@@ -1,5 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Header from "../../../../internals/header/index";
 import BackBtn from "../../../../../../components/Button/back";
 import Image from "next/image";
@@ -14,19 +17,60 @@ import {
   DatePickerInput,
   ProgressBar,
   Heading,
+  Checkbox,
+  Stack,
+  PasswordInput,
 } from "@carbon/react";
-import ProgressSteps from "../progress";
+import { PatientProgressSteps } from "../progress";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "@carbon/icons-react";
 
-function Doctor() {
+function PatientRegistration() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progress, setProgress] = useState(0);
-  const totalSteps = 4;
+  const [patientData, setPatientData] = useState({
+    name: "",
+    date_of_birth: "",
+    gender: "",
+    email: "",
+    phone_number: "",
+    address: "",
+    emergency_contact_name: "",
+    emergency_contact_relationship: "",
+    emergency_contact_phone: "",
+    emergency_contact_email: "",
+    current_health_conditions: "",
+    past_medical_history: "",
+    allergies: "",
+    current_medications: "",
+    primary_care_physician: "",
+    family_health_conditions: "",
+    lifestyle_habits: "",
+    exercise_routine: "",
+    dietary_habits: "",
+    insurance_provider: "",
+    policy_number: "",
+    insurance_phone: "",
+    consent_to_treat: false,
+    privacy_policy: false,
+    password: "",
+    confirm_password: "",
+    enable_2fa: false,
+  });
+
+  const totalSteps = 9;
+
+  const handleChange = (e) => {
+    const { id, value, checked, type } = e.target;
+    setPatientData((prevData) => ({
+      ...prevData,
+      [id]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   const handleNext = () => {
-    if (currentStep < totalSteps) {
+    if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -40,22 +84,46 @@ function Doctor() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  };
-
-  useEffect(() => {
-    if (isSubmitting) {
-      let progressInterval = setInterval(() => {
-        setProgress((prevProgress) => {
-          if (prevProgress >= 100) {
-            clearInterval(progressInterval);
+    Swal.fire({
+      title: 'Adding you to Medlink',
+      text: 'Please wait...',
+      imageUrl: '/logov2.svg',
+      imageWidth: 70,
+      imageHeight: 70,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        fetch("http://localhost:8000/api/patients/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(patientData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            Swal.close();
+            toast.success('Registration successful! Redirecting to home...');
             window.location.href = "/home"; // Redirect to home after submission
-            return 100;
-          }
-          return prevProgress + 1;
-        });
-      }, 30); // Adjust the interval time as needed for the desired speed
-    }
-  }, [isSubmitting]);
+          })
+          .catch((error) => {
+            Swal.close();
+            toast.error('Registration failed. Please try again.');
+            console.error('There was an error!', error);
+          })
+          .finally(() => {
+            setIsSubmitting(false);
+          });
+      }
+    });
+  };
 
   const renderFormFields = () => {
     switch (currentStep) {
@@ -63,89 +131,137 @@ function Doctor() {
         return (
           <>
             <TextInput
-              id="text-input-1"
+              id="name"
               type="text"
               className="inputs"
-              labelText="Enter your Full Name"
+              labelText="Name"
+              onChange={handleChange}
+              value={patientData.name}
             />
-            <Select
+            <DatePicker datePickerType="single">
+              <DatePickerInput
+                id="date_of_birth"
+                labelText="Date of Birth"
+                placeholder="mm/dd/yyyy"
+                onChange={handleChange}
+                value={patientData.date_of_birth}
+              />
+            </DatePicker>
+            <TextInput
+              id="gender"
+              type="text"
               className="inputs"
-              id={`select-3`}
-              labelText="Select your city"
-              defaultValue="option-3"
-            >
-              <SelectItem value="option-1" text="Option 1" />
-              <SelectItem value="Germany" text="Option 2" />
-              <SelectItem value="option-3" text="Option 3" />
-            </Select>
-            <Select
+              labelText="Gender"
+              onChange={handleChange}
+              value={patientData.gender}
+            />
+            <Stack gap={6} orientation="horizontal">
+              <TextInput
+                id="email"
+                type="text"
+                className="inputs"
+                labelText="Contact Information (email)"
+                onChange={handleChange}
+                value={patientData.email}
+              />
+              <TextInput
+                id="phone_number"
+                type="text"
+                className="inputs"
+                labelText="Contact Information (Phone number)"
+                onChange={handleChange}
+                value={patientData.phone_number}
+              />
+            </Stack>
+            <TextInput
+              id="address"
+              type="text"
               className="inputs"
-              id={`select-3`}
-              labelText="Select your Country"
-              defaultValue="Kenya"
-            >
-              <SelectItem value="China" text="China" />
-              <SelectItem value="Germany" text="Germany" />
-              <SelectItem value="Brazil" text="Brazil" />
-            </Select>
+              labelText="Address"
+              onChange={handleChange}
+              value={patientData.address}
+            />
           </>
         );
       case 1:
         return (
           <>
             <TextInput
-              id="text-input-2"
-              type="email"
+              id="emergency_contact_name"
+              type="text"
               className="inputs"
-              labelText="Enter your Email"
+              labelText="Emergency Contact Name"
+              onChange={handleChange}
+              value={patientData.emergency_contact_name}
             />
             <TextInput
-              id="text-input-2"
-              type="number"
+              id="emergency_contact_relationship"
+              type="text"
               className="inputs"
-              labelText="Enter your Phone Number"
+              labelText="Emergency Contact Relationship"
+              onChange={handleChange}
+              value={patientData.emergency_contact_relationship}
             />
-            <DatePicker
-              datePickerType="single"
-              onChange={function noRefCheck() {}}
-              onClose={function noRefCheck() {}}
-              onOpen={function noRefCheck() {}}
-            >
-              <DatePickerInput
-                id="date-picker-single"
-                labelText="Date of Birth"
-                onChange={function noRefCheck() {}}
-                onClose={function noRefCheck() {}}
-                onOpen={function noRefCheck() {}}
-                placeholder="mm/dd/yyyy"
-              />
-            </DatePicker>
+            <TextInput
+              id="emergency_contact_phone"
+              type="text"
+              className="inputs"
+              labelText="Emergency Contact Phone Number"
+              onChange={handleChange}
+              value={patientData.emergency_contact_phone}
+            />
+            <TextInput
+              id="emergency_contact_email"
+              type="text"
+              className="inputs"
+              labelText="Emergency Contact Email"
+              onChange={handleChange}
+              value={patientData.emergency_contact_email}
+            />
           </>
         );
       case 2:
         return (
           <>
             <TextInput
-              id="text-input-4"
+              id="current_health_conditions"
               type="text"
               className="inputs"
-              labelText="Enter your Address"
+              labelText="Current Health Conditions"
+              onChange={handleChange}
+              value={patientData.current_health_conditions}
             />
-            <Select
-              className="inputs"
-              id={`select-4`}
-              labelText="Select your Gender"
-              defaultValue="option-1"
-            >
-              <SelectItem value="option-1" text="Male" />
-              <SelectItem value="option-2" text="Female" />
-              <SelectItem value="option-3" text="Other" />
-            </Select>
             <TextInput
-              id="text-input-6"
+              id="past_medical_history"
               type="text"
               className="inputs"
-              labelText="Enter your Occupation"
+              labelText="Past Medical History (major illnesses, surgeries)"
+              onChange={handleChange}
+              value={patientData.past_medical_history}
+            />
+            <TextInput
+              id="allergies"
+              type="text"
+              className="inputs"
+              labelText="Allergies (medications, food, environmental)"
+              onChange={handleChange}
+              value={patientData.allergies}
+            />
+            <TextInput
+              id="current_medications"
+              type="text"
+              className="inputs"
+              labelText="Medications Currently Taking (name, dosage)"
+              onChange={handleChange}
+              value={patientData.current_medications}
+            />
+            <TextInput
+              id="primary_care_physician"
+              type="text"
+              className="inputs"
+              labelText="Primary Care Physician (name, contact)"
+              onChange={handleChange}
+              value={patientData.primary_care_physician}
             />
           </>
         );
@@ -153,37 +269,137 @@ function Doctor() {
         return (
           <>
             <TextInput
-              id="text-input-6"
+              id="family_health_conditions"
               type="text"
               className="inputs"
-              labelText="Enter your Occupation"
+              labelText="Health Conditions that Run in the Family (e.g., diabetes, heart disease)"
+              onChange={handleChange}
+              value={patientData.family_health_conditions}
             />
-            <Select
-              className="inputs"
-              id={`select-4`}
-              labelText="Select your Gender"
-              defaultValue="option-1"
-            >
-              <SelectItem value="option-1" text="Male" />
-              <SelectItem value="option-2" text="Female" />
-              <SelectItem value="option-3" text="Other" />
-            </Select>
           </>
         );
       case 4:
         return (
           <>
             <TextInput
-              id="text-input-7"
+              id="lifestyle_habits"
               type="text"
               className="inputs"
-              labelText="Enter your Nationality"
+              labelText="Lifestyle Habits (smoking, alcohol use)"
+              onChange={handleChange}
+              value={patientData.lifestyle_habits}
             />
             <TextInput
-              id="text-input-8"
+              id="exercise_routine"
               type="text"
               className="inputs"
-              labelText="Enter your Age"
+              labelText="Exercise Routine"
+              onChange={handleChange}
+              value={patientData.exercise_routine}
+            />
+            <TextInput
+              id="dietary_habits"
+              type="text"
+              className="inputs"
+              labelText="Dietary Habits"
+              onChange={handleChange}
+              value={patientData.dietary_habits}
+            />
+          </>
+        );
+      case 5:
+        return (
+          <>
+            <TextInput
+              id="insurance_provider"
+              type="text"
+              className="inputs"
+              labelText="Insurance Provider"
+              onChange={handleChange}
+              value={patientData.insurance_provider}
+            />
+            <TextInput
+              id="policy_number"
+              type="text"
+              className="inputs"
+              labelText="Policy Number"
+              onChange={handleChange}
+              value={patientData.policy_number}
+            />
+            <TextInput
+              id="insurance_phone"
+              type="text"
+              className="inputs"
+              labelText="Insurance Company Phone Number"
+              onChange={handleChange}
+              value={patientData.insurance_phone}
+            />
+          </>
+        );
+      case 7:
+        return (
+          <>
+            <Heading
+              style={{
+                marginBottom: "20px",
+                fontSize: "12px",
+                fontWeight: "bold",
+              }}
+            >
+              Please review the following consent and authorization information.
+              You must agree to the terms to proceed with the treatment and
+              ensure compliance with privacy policies.
+            </Heading>
+            <Checkbox
+              id="consent_to_treat"
+              labelText="I give my consent to be treated."
+              helperText="By checking this box, you agree to allow our medical team to provide necessary treatment."
+              onChange={handleChange}
+              checked={patientData.consent_to_treat}
+            />
+            <Checkbox
+              id="privacy_policy"
+              labelText="I acknowledge the privacy policy (HIPAA compliance)."
+              helperText="By checking this box, you acknowledge that you have read and understood our privacy policy in compliance with HIPAA regulations."
+              onChange={handleChange}
+              checked={patientData.privacy_policy}
+            />
+          </>
+        );
+      case 6:
+        return (
+          <>
+            <Heading
+              style={{
+                marginBottom: "20px",
+                fontSize: "16px",
+                fontWeight: "bold",
+              }}
+            >
+              Create a Secure Password
+            </Heading>
+            <PasswordInput
+              id="password"
+              labelText="New Password"
+              helperText="Your password must meet the following criteria: at least 8 characters long, include both uppercase and lowercase letters, and contain at least one number and one special character."
+              autoComplete="off"
+              onChange={handleChange}
+              value={patientData.password}
+            />
+            <PasswordInput
+              id="confirm_password"
+              labelText="Confirm Password"
+              helperText="Ensure this matches your new password."
+              autoComplete="off"
+              onChange={handleChange}
+              value={patientData.confirm_password}
+            />
+            <Checkbox
+              id="enable_2fa"
+              labelText="Enable Two-Factor Authentication (2FA)"
+              helperText="By selecting this option, you agree to enhance your account security by enabling two-factor authentication."
+              onChange={handleChange}
+              checked={patientData.enable_2fa}
             />
           </>
         );
@@ -194,10 +410,10 @@ function Doctor() {
 
   return (
     <div className="patient-reg">
+      <ToastContainer />
       <div className="reg-body">
         <Header>
           <section className="flex-left">
-            {" "}
             <Image
               width={70}
               height={70}
@@ -216,7 +432,7 @@ function Doctor() {
               <BackBtn /> Back
             </Link>
           </section>
-          <h4>Personal Information</h4>
+          <h4>Patient Registration</h4>
         </Header>
         <section className="reg-form">
           <div className="cont">
@@ -225,21 +441,7 @@ function Doctor() {
             <div className="my-form">
               {isSubmitting ? (
                 <div className="signin-progress">
-                  <img
-                    src="../../../../../../logov2.svg"
-                    alt="Medlink Logo"
-                    className="logo-progress"
-                  />
-                  <Heading
-                    style={{
-                      textAlign: "center",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    Adding you into Medlink
-                  </Heading>
-                  <ProgressBar className="my-progress" label={`${progress}%`} value={progress} />
+                  {/* SweetAlert will handle the progress notification */}
                 </div>
               ) : (
                 <Form
@@ -259,7 +461,7 @@ function Doctor() {
                     >
                       Previous
                     </Button>
-                    {currentStep < totalSteps ? (
+                    {currentStep < totalSteps - 1 ? (
                       <Button
                         kind="secondary"
                         size="sm"
@@ -279,23 +481,19 @@ function Doctor() {
                         Submit
                       </Button>
                     )}
-                    <Button kind="primary" size="sm" className="some-class">
-                      Continue with Google
-                    </Button>
                   </div>
                 </Form>
               )}
             </div>
           </div>
-
           <Footer />
         </section>
       </div>
       <section className="reg-progress">
-        <ProgressSteps currentStep={currentStep} />
+        <PatientProgressSteps currentStep={currentStep} />
       </section>
     </div>
   );
 }
 
-export default Doctor;
+export default PatientRegistration;

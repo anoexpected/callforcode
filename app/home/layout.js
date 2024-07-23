@@ -19,10 +19,10 @@ import {
 import Chats from "./chats";
 import Appointments from "./appointments";
 import Help from "./help";
-import Dashboard from "./Dashboard";
+import Dashboard from "./dashboard";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
-import Conferencing from './conference'
+import Conferencing from "./conferencing";
 function Container() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -135,8 +135,6 @@ function Container() {
       path: "conferencing",
       icon: <Video size={32} />,
     },
-
-   
   ];
 
   const renderContent = () => {
@@ -234,7 +232,7 @@ function Container() {
               <Header />
             </section>
             <section className="content-section">
-            <Content>{renderContent()}</Content>
+              <Content>{renderContent()}</Content>
             </section>
           </div>
         </>

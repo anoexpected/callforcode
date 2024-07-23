@@ -1,10 +1,10 @@
+"use client"
 import React from 'react'
-import Home from '.';
+import Layout from './layout';
 function page() {
   return (
-    <div>
-      <Home/>
-    </div>
+    <Layout>
+    </Layout>
   )
 }
 
