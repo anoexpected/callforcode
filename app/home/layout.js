@@ -5,37 +5,37 @@ import "./layout.scss";
 import SideBar from "../../components/sidebar";
 import Header from "../../components/header";
 import Content from "../../components/content";
-import { Menu, MenuItem } from "../../components/menu";
+import { Menu } from "../../components/menu";
 import { Button, ButtonSkeleton } from "@carbon/react";
 import {
   Bee,
   Calendar,
   Chat,
   Workspace,
-  Medication,
   Person,
   Video,
 } from "@carbon/icons-react";
 import Chats from "./chats";
 import Appointments from "./appointments";
 import Help from "./help";
-import Dashboard from "./Dashboard";
+import Dashboard from "./dashboard";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
-import Conferencing from './conference'
-function Container() {
+import Conferencing from "./conference";
+
+function Container({ defaSelected }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [contentLoading, setContentLoading] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("Dashboard");
-  const [isMobile, setisMobile] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(defaSelected);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 760) {
-        setisMobile(true);
+        setIsMobile(true);
       } else {
-        setisMobile(false);
+        setIsMobile(false);
       }
     };
     handleResize();
@@ -52,8 +52,16 @@ function Container() {
 
   const updateSelectedItem = () => {
     const storedItem = localStorage.getItem("selectedItem");
-    if (storedItem !== null) {
+    console.log("Stored item:", storedItem); // Debugging statement
+    console.log("Default selected:", defaSelected); // Debugging statement
+
+    if (!storedItem) {
+      setSelectedItem(defaSelected);
+      console.log("Setting default selected item:", defaSelected); // Debugging statement
+      localStorage.setItem("selectedItem", defaSelected);
+    } else {
       setSelectedItem(storedItem);
+      console.log("Setting stored item:", storedItem); // Debugging statement
     }
   };
 
@@ -74,6 +82,7 @@ function Container() {
       window.removeEventListener("localStorageChange", handleStorageChange);
     };
   }, []);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1260) {
@@ -135,8 +144,6 @@ function Container() {
       path: "conferencing",
       icon: <Video size={32} />,
     },
-
-   
   ];
 
   const renderContent = () => {
@@ -155,8 +162,8 @@ function Container() {
         return <Help />;
       case "conferencing":
         return <Conferencing />;
-      default:
-        return <Dashboard onMedicationClick={handleMedicationClick} />;
+      // default:
+      //   return <Dashboard onMedicationClick={handleMedicationClick} />;
     }
   };
 
@@ -234,7 +241,7 @@ function Container() {
               <Header />
             </section>
             <section className="content-section">
-            <Content>{renderContent()}</Content>
+              <Content>{renderContent()}</Content>
             </section>
           </div>
         </>

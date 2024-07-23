@@ -1,12 +1,16 @@
-"use client"
-import React from 'react'
-import Help from './index'
+"use client";
+
+import React from "react";
+import Help from "./index";
+import Layout from "../layout";
 function page() {
   return (
     <div>
-      <Help/>
+      <Layout defaultSelected={'Help'}>
+        <Help />
+      </Layout>
     </div>
-  )
+  );
 }
 
-export default page
+export default page;

@@ -1,11 +1,12 @@
-import React from 'react'
-import Home from '.';
+import React from "react";
+import Layout from "./layout";
 function page() {
   return (
     <div>
-      <Home/>
+      <Layout defaSelected="Dashboard">
+      </Layout>
     </div>
-  )
+  );
 }
 
-export default page
+export default page;
