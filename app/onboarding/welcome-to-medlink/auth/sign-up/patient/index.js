@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import Header from "../../../../internals/header/index";
 import BackBtn from "../../../../../../components/Button/back";
 import Image from "next/image";
@@ -59,7 +59,7 @@ function PatientRegistration() {
     enable_2fa: false,
   });
 
-  const totalSteps = 9;
+  const totalSteps = 8;
 
   const handleChange = (e) => {
     const { id, value, checked, type } = e.target;
@@ -85,9 +85,9 @@ function PatientRegistration() {
     e.preventDefault();
     setIsSubmitting(true);
     Swal.fire({
-      title: 'Adding you to Medlink',
-      text: 'Please wait...',
-      imageUrl: '/logov2.svg',
+      title: "Adding you to Medlink",
+      text: "Please wait...",
+      imageUrl: "/logov2.svg",
       imageWidth: 70,
       imageHeight: 70,
       allowOutsideClick: false,
@@ -95,7 +95,7 @@ function PatientRegistration() {
       showConfirmButton: false,
       didOpen: () => {
         Swal.showLoading();
-        fetch("http://localhost:8000/api/patients/", {
+        fetch("http://localhost:8000/api/patients", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -110,18 +110,18 @@ function PatientRegistration() {
           })
           .then((data) => {
             Swal.close();
-            toast.success('Registration successful! Redirecting to home...');
+            toast.success("Registration successful! Redirecting to home...");
             window.location.href = "/home"; // Redirect to home after submission
           })
           .catch((error) => {
             Swal.close();
-            toast.error('Registration failed. Please try again.');
-            console.error('There was an error!', error);
+            toast.error("Registration failed. Please try again.");
+            console.error("There was an error!", error);
           })
           .finally(() => {
             setIsSubmitting(false);
           });
-      }
+      },
     });
   };
 
