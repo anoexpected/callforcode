@@ -74,3 +74,12 @@
 .my-progress{
   width: 100%;
 }
+.forgot-password{
+  width: 100%;
+  text-align: right;
+  cursor: pointer;
+}
+.forgot-password:hover{
+  color: var(--primary-color);
+  text-decoration: underline;
+}

@@ -21,7 +21,7 @@ import Help from "./help";
 import Dashboard from "./dashboard";
 import nprogress from "nprogress";
 import "nprogress/nprogress.css";
-import Conferencing from "./conference";
+import Conferencing from "./conferencing";
 
 function Container({ defaSelected }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -162,8 +162,8 @@ function Container({ defaSelected }) {
         return <Help />;
       case "conferencing":
         return <Conferencing />;
-      // default:
-      //   return <Dashboard onMedicationClick={handleMedicationClick} />;
+      default:
+        return <Dashboard onMedicationClick={handleMedicationClick} />;
     }
   };
 

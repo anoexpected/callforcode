@@ -59,14 +59,23 @@ function PatientRegistration() {
     enable_2fa: false,
   });
 
-  const totalSteps = 8;
+  const totalSteps = 7;
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("patientData");
+    if (savedData) {
+      setPatientData(JSON.parse(savedData));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { id, value, checked, type } = e.target;
-    setPatientData((prevData) => ({
-      ...prevData,
+    const updatedData = {
+      ...patientData,
       [id]: type === "checkbox" ? checked : value,
-    }));
+    };
+    setPatientData(updatedData);
+    localStorage.setItem("patientData", JSON.stringify(updatedData));
   };
 
   const handleNext = () => {
@@ -83,6 +92,9 @@ function PatientRegistration() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (currentStep > 6) {
+      return;
+    }
     setIsSubmitting(true);
     Swal.fire({
       title: "Adding you to Medlink",
@@ -95,7 +107,7 @@ function PatientRegistration() {
       showConfirmButton: false,
       didOpen: () => {
         Swal.showLoading();
-        fetch("http://localhost:8000/api/patients", {
+        fetch("http://127.0.0.1:8000/api/patients/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -111,6 +123,7 @@ function PatientRegistration() {
           .then((data) => {
             Swal.close();
             toast.success("Registration successful! Redirecting to home...");
+            localStorage.removeItem("patientData"); // Clear saved data
             window.location.href = "/home"; // Redirect to home after submission
           })
           .catch((error) => {
@@ -138,13 +151,14 @@ function PatientRegistration() {
               onChange={handleChange}
               value={patientData.name}
             />
-            <DatePicker datePickerType="single">
+            <DatePicker datePickerType="single" dateFormat="Y-m-d">
               <DatePickerInput
                 id="date_of_birth"
                 labelText="Date of Birth"
-                placeholder="mm/dd/yyyy"
+                placeholder="MM/DD/YYYY"
                 onChange={handleChange}
                 value={patientData.date_of_birth}
+                // value={new Date()}
               />
             </DatePicker>
             <TextInput
@@ -467,6 +481,7 @@ function PatientRegistration() {
                         size="sm"
                         renderIcon={ArrowRight}
                         className="some-class"
+                        type="button"
                         onClick={handleNext}
                       >
                         Next

@@ -26,7 +26,7 @@ function Doctor() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progress, setProgress] = useState(0);
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -40,7 +40,7 @@ function Doctor() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmitData = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     Swal.fire({
@@ -60,7 +60,7 @@ function Doctor() {
               clearInterval(progressInterval);
               Swal.close();
               toast.success('Registration successful!');
-              window.location.href = "/home"; // Redirect to home after submission
+              // window.location.href = "/home"; // Redirect to home after submission
               return 100;
             }
             return prevProgress + 1;
@@ -192,6 +192,19 @@ function Doctor() {
             />
           </>
         );
+      case 5:
+        return(
+        <>
+          <Heading>I agree</Heading>
+          <TextInput
+          id="text-input-8"
+          type="text"
+          className="inputs"
+          labelText="Enter your Age"
+        />
+        </>
+        );
+
       default:
         return null;
     }
@@ -236,7 +249,7 @@ function Doctor() {
                 <Form
                   aria-label="Registration form"
                   className="form"
-                  onSubmit={handleSubmit}
+                  onSubmit={handleSubmitData}
                 >
                   {renderFormFields()}
                   <div className="flex-btns">
@@ -257,6 +270,7 @@ function Doctor() {
                         renderIcon={ArrowRight}
                         className="some-class"
                         onClick={handleNext}
+                        type="button"
                       >
                         Next
                       </Button>
