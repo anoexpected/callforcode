@@ -37,16 +37,16 @@
     gap: 0;
     height: calc(100vh - 10vh);
     
-  background-image: url('../../../../public/auth-img/bg1.avif');
-  background-size: cover;
-  background-position: center;
+  // background-image: url('../../../../public/auth-img/bg1.avif');
+  // background-size: cover;
+  // background-position: center;
 
   }
- .sign-up-container img{
-  width: 50%;
-  height: 500px;
+//  .sign-up-container img{
+//   width: 50%;
+//   height: 500px;
   
- }
+//  }
  .join-us{
   display: flex;
   align-items: center;
@@ -56,8 +56,8 @@
   padding: 20px;
   width: auto;
   // border: 1px solid var(--primary-color);
-  box-shadow: 2px 4px 10px var(--text-color-3);
-  background-color: var(--secondary-color-2);
+  // box-shadow: 2px 4px 10px var(--text-color-3);
+  // background-color: var(--secondary-color-2);
 
  }
  .signup-title{
@@ -84,3 +84,28 @@
   flex-direction: column;
   height: auto;
  }
+
+ 
+.svg-part{
+  height: 100%;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../../../public/svg/createaccount.svg');
+  background-color: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  // border: 1px solid red;
+}
+.form-part{
+  width: 30%;
+  height: 100%;
+  padding: 20px;
+  background-color: var(--tertiary-color) ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // border: 1px solid black;
+
+}

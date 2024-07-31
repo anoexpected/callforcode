@@ -93,6 +93,12 @@ function DoctorProgressSteps({ currentStep }) {
       description: "Step 6: Give your consent for practice and acknowledge our privacy policy (HIPAA compliance).", 
       complete: currentStep > 5
     },
+    
+    { 
+      label: "Security information", 
+      description: "Step 6: Create a secure password and enable 2fa if necessary.", 
+      complete: currentStep > 6
+    },
   ];
 
   return (

@@ -102,7 +102,6 @@ const MyExpandableTile = ({
                   <SelectItem value="us-east" text="Liquid" />
                 </Select>
                 <TextInput
-                  // data-modal-primary-focus
                   id="medication-Quantity"
                   labelText="Medication Quantity"
                   placeholder="e.g 20 (30 mg)"
@@ -122,7 +121,6 @@ const MyExpandableTile = ({
                   <SelectItem value="us-east" text="Pharmacy 2" />
                 </Select>
                 <TextInput
-                  // data-modal-primary-focus
                   disabled
                   id="medication-price"
                   labelText="Medication Price"
@@ -139,7 +137,7 @@ const MyExpandableTile = ({
                   alt="refill image"
                 />
                 <p className="refill-text">
-                {description}  {/*  this description is not showing */}
+                {description} 
 
                 
                 </p>

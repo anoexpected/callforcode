@@ -4,14 +4,14 @@ import ReactDOM from "react-dom";
 import "./styles.scss";
 
 const AppointmentModal = ({ onClose, appointmentDetails }) => {
-  const [openFirstModal, setOpenFirstModal] = useState(true); // First modal open state
-  const [openProblemModal, setOpenProblemModal] = useState(false); // Problem description modal state
-  const [openPaymentModal, setOpenPaymentModal] = useState(false); // Payment modal state
-  const [openConfirmationModal, setOpenConfirmationModal] = useState(false); // Confirmation modal state
+  const [openFirstModal, setOpenFirstModal] = useState(true); 
+  const [openProblemModal, setOpenProblemModal] = useState(false); 
+  const [openPaymentModal, setOpenPaymentModal] = useState(false); 
+  const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
 
-  const [selectedPeriod, setSelectedPeriod] = useState("Morning"); // Default to Morning
-  const [selectedTime, setSelectedTime] = useState(""); // Selected time slot
-  const [selectedConsultationType, setSelectedConsultationType] = useState(""); // Selected consultation type
+  const [selectedPeriod, setSelectedPeriod] = useState("Morning");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedConsultationType, setSelectedConsultationType] = useState("");
   const timeSlots = generateTimeSlots(selectedPeriod);
 
   function generateTimeSlots(period) {
@@ -55,40 +55,38 @@ const AppointmentModal = ({ onClose, appointmentDetails }) => {
   };
 
   const handleNextButtonClick = () => {
-    setOpenFirstModal(false); // Close the first modal
-    setOpenProblemModal(true); // Open the problem description modal
+    setOpenFirstModal(false); 
+    setOpenProblemModal(true); 
   };
 
   const handleBackToBookingClick = () => {
-    setOpenFirstModal(true); // Open the first modal again
-    setOpenProblemModal(false); // Close the problem description modal
+    setOpenFirstModal(true); 
+    setOpenProblemModal(false); 
   };
 
   const handleProblemSubmit = () => {
-    setOpenProblemModal(false); // Close the problem description modal
-    setOpenPaymentModal(true); // Open the payment modal
+    setOpenProblemModal(false); 
+    setOpenPaymentModal(true); 
   };
 
   const handleBackToProblemClick = () => {
-    setOpenProblemModal(true); // Open the problem description modal
-    setOpenPaymentModal(false); // Close the payment modal
+    setOpenProblemModal(true); 
+    setOpenPaymentModal(false); 
   };
 
   const handlePaymentSubmit = () => {
-    // Simulate payment processing (replace with actual PayPal integration)
     console.log("Payment processed successfully");
-    setOpenPaymentModal(false); // Close the payment modal
-    setOpenConfirmationModal(true); // Open the confirmation modal
+    setOpenPaymentModal(false); 
+    setOpenConfirmationModal(true); 
   };
 
   const handleConfirmationClose = () => {
-    setOpenConfirmationModal(false); // Close the confirmation modal
-    onClose(); // Close the entire appointment modal
+    setOpenConfirmationModal(false); 
+    onClose(); 
   };
 
   return (
     <>
-      {/* First Modal - Booking Details */}
       <Modal
         open={openFirstModal}
         modalHeading={`Booking for ${appointmentDetails.doctorName}`}
@@ -162,7 +160,6 @@ const AppointmentModal = ({ onClose, appointmentDetails }) => {
         </section>
       </Modal>
 
-      {/* Second Modal - Problem Description */}
       <Modal
         open={openProblemModal}
         modalHeading="Describe Your Problem"
@@ -178,7 +175,6 @@ const AppointmentModal = ({ onClose, appointmentDetails }) => {
         />
       </Modal>
 
-      {/* Third Modal - Payment via PayPal (placeholder) */}
       <Modal
         open={openPaymentModal}
         modalHeading="Pay with PayPal"
@@ -190,7 +186,6 @@ const AppointmentModal = ({ onClose, appointmentDetails }) => {
         <p>Placeholder for PayPal integration.</p>
       </Modal>
 
-      {/* Fourth Modal - Confirmation */}
       <Modal
         open={openConfirmationModal}
         modalHeading="Appointment Booked Successfully"

@@ -13,7 +13,7 @@ function BackButton({ onClick }) {
         alignItems: "center",
         justifyContent: 'center',
       }}
-      onClick={onClick} // Call onClick prop when clicked
+      onClick={onClick} 
     >
       <ArrowLeft />
     </div>

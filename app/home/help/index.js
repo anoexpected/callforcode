@@ -93,11 +93,9 @@ function Help() {
       description:
         "Booking an appointment is easy! Log in to your account, navigate to the appointments section, choose your preferred date and time, and confirm your booking. You will receive a confirmation email shortly after.",
     },
-    // Add more FAQs as needed
   ];
   
 
-  // Function to fetch online results based on search query
   const fetchOnlineResults = async () => {
     setLoading(true);
     setError(null);
@@ -110,7 +108,6 @@ function Help() {
       const response = await fetch(url);
       const data = await response.json();
 
-      // Fetch extracts for each search result
       const titles = data[1].join("|");
       const extractUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro&explaintext&titles=${encodeURIComponent(
         titles
@@ -195,7 +192,6 @@ function Help() {
         />
       </section>
       <section className="help-body">
-        {/* Top Help Section */}
         <div className="top-help">
           <div className="help-info">
             <Heading className="find">

@@ -1,15 +1,15 @@
 .login-form{
     width: 500px;
     height: auto;
-    box-shadow: 2px 4px 10px var(--text-color-3);
+    // box-shadow: 2px 4px 10px var(--text-color-3);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.8); 
+    // cursor: pointer;
+    // background-color: rgba(255, 255, 255, 0.8); 
 
 }
 .login-form:hover{

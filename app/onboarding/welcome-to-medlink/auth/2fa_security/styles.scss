@@ -24,7 +24,7 @@
 .link{
     font-weight: bold;
 }
-.request-form{
+.fa-form{
     width: 100%;
     height: auto;
     display: flex;
@@ -45,7 +45,7 @@
     align-items: center;
     justify-content: center;
 }
-.btns, .inputs, .input-fields{
+.inputs, .input-fields{
     width: 100%;
 }
 .svg-part{
@@ -54,7 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../../../../../public/svg/signin2.svg');
+    background-image: url('../../../../../public/svg/2fa.svg');
     background-color: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -70,6 +70,13 @@
     justify-content: center;
     // border: 1px solid black;
 
+}
+.flex-btnss{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 30px;
 }
 @media screen and (max-width:1200px) {
     .form{

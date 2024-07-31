@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import Header from "../../../../internals/header/index";
 import BackBtn from "../../../../../../components/Button/back";
 import Image from "next/image";
@@ -17,19 +17,65 @@ import {
   DatePickerInput,
   ProgressBar,
   Heading,
+  Checkbox,
+  Stack,
+  PasswordInput,
 } from "@carbon/react";
-import {DoctorProgressSteps} from "../progress";
+import { DoctorProgressSteps } from "../progress";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "@carbon/icons-react";
 
-function Doctor() {
+function DoctorRegistration() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progress, setProgress] = useState(0);
-  const totalSteps = 5;
+  const [doctorData, setdoctorData] = useState({
+    name: "",
+    date_of_birth: "",
+    gender: "",
+    email: "",
+    phone_number: "",
+    address: "",
+    emergency_contact_name: "",
+    emergency_contact_relationship: "",
+    emergency_contact_phone: "",
+    emergency_contact_email: "",
+    medical_qualifications: "",
+    years_of_experience: "",
+    current_practice_location: "",
+    professional_associations: "",
+    research_interests: "",
+    insurance_provider: "",
+    policy_number: "",
+    group_number: "",
+    coverage_details: "",
+    hospital_affiliation: "",
+    languages_spoken: "",
+    password: "",
+    enable_2fa: false,
+  });
+
+  const totalSteps = 7;
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("doctorData");
+    if (savedData) {
+      setdoctorData(JSON.parse(savedData));
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    const { id, value, checked, type } = e.target;
+    const updatedData = {
+      ...doctorData,
+      [id]: type === "checkbox" ? checked : value,
+    };
+    setdoctorData(updatedData);
+    localStorage.setItem("doctorData", JSON.stringify(updatedData));
+  };
 
   const handleNext = () => {
-    if (currentStep < totalSteps) {
+    if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -40,13 +86,16 @@ function Doctor() {
     }
   };
 
-  const handleSubmitData = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    if (currentStep > 6) {
+      return;
+    }
     setIsSubmitting(true);
     Swal.fire({
-      title: 'Adding you to Medlink',
-      text: 'Please wait...',
-      imageUrl: '/logov2.svg',
+      title: "Adding you to Medlink",
+      text: "Please wait...",
+      imageUrl: "/logov2.svg",
       imageWidth: 70,
       imageHeight: 70,
       allowOutsideClick: false,
@@ -54,103 +103,163 @@ function Doctor() {
       showConfirmButton: false,
       didOpen: () => {
         Swal.showLoading();
-        let progressInterval = setInterval(() => {
-          setProgress((prevProgress) => {
-            if (prevProgress >= 100) {
-              clearInterval(progressInterval);
-              Swal.close();
-              toast.success('Registration successful!');
-              // window.location.href = "/home"; // Redirect to home after submission
-              return 100;
+        fetch("http://127.0.0.1:8000/api/clinician/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(doctorData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
             }
-            return prevProgress + 1;
+            return response.json();
+          })
+          .then((data) => {
+            Swal.close();
+            toast.success("Registration successful! Redirecting to home...");
+            localStorage.removeItem("doctorData");
+            window.location.href = "/home";
+          })
+          .catch((error) => {
+            Swal.close();
+            toast.error("Registration failed. Please try again:", error);
+            console.error("There was an error!", error);
+          })
+          .finally(() => {
+            setIsSubmitting(false);
           });
-        }, 30);
-      }
+      },
     });
   };
-
   const renderFormFields = () => {
     switch (currentStep) {
       case 0:
         return (
           <>
             <TextInput
-              id="text-input-1"
+              id="name"
               type="text"
               className="inputs"
-              labelText="Enter your Full Name"
+              labelText="Name"
+              onChange={handleChange}
+              value={doctorData.name}
             />
-            <Select
+           <Stack> <TextInput
+              id="gender"
+              type="text"
               className="inputs"
-              id="select-3"
-              labelText="Select your city"
-              defaultValue="option-3"
-            >
-              <SelectItem value="option-1" text="Option 1" />
-              <SelectItem value="Germany" text="Option 2" />
-              <SelectItem value="option-3" text="Option 3" />
-            </Select>
-            <Select
+              labelText="Gender"
+              onChange={handleChange}
+              value={doctorData.gender}
+            />
+            <TextInput
+              id="address"
+              type="text"
               className="inputs"
-              id="select-3"
-              labelText="Select your Country"
-              defaultValue="Kenya"
-            >
-              <SelectItem value="China" text="China" />
-              <SelectItem value="Germany" text="Germany" />
-              <SelectItem value="Brazil" text="Brazil" />
-            </Select>
+              labelText="Address"
+              onChange={handleChange}
+              value={doctorData.address}
+            /></Stack>
+            <DatePicker datePickerType="single" dateFormat="Y-m-d">
+              <DatePickerInput
+                id="date_of_birth"
+                labelText="Date of Birth"
+                placeholder="MM/DD/YYYY"
+                onChange={handleChange}
+                value={doctorData.date_of_birth}
+              />
+            </DatePicker>
+            <TextInput
+              id="specialization"
+              type="text"
+              className="inputs"
+              labelText="Specialization"
+              onChange={handleChange}
+              value={doctorData.specialization}
+            />
+            <TextInput
+              id="email"
+              type="text"
+              className="inputs"
+              labelText="Contact Information (email)"
+              onChange={handleChange}
+              value={doctorData.email}
+            />
+            <TextInput
+              id="phone_number"
+              type="text"
+              className="inputs"
+              labelText="Contact Information (Phone number)"
+              onChange={handleChange}
+              value={doctorData.phone_number}
+            />
           </>
         );
       case 1:
         return (
           <>
             <TextInput
-              id="text-input-2"
-              type="email"
+              id="emergency_contact_name"
+              type="text"
               className="inputs"
-              labelText="Enter your Email"
+              labelText="Emergency Contact Name"
+              onChange={handleChange}
+              value={doctorData.emergency_contact_name}
             />
             <TextInput
-              id="text-input-2"
-              type="number"
+              id="emergency_contact_relationship"
+              type="text"
               className="inputs"
-              labelText="Enter your Phone Number"
+              labelText="Emergency Contact Relationship"
+              onChange={handleChange}
+              value={doctorData.emergency_contact_relationship}
             />
-            <DatePicker datePickerType="single">
-              <DatePickerInput
-                id="date-picker-single"
-                labelText="Date of Birth"
-                placeholder="mm/dd/yyyy"
-              />
-            </DatePicker>
+            <TextInput
+              id="emergency_contact_phone"
+              type="text"
+              className="inputs"
+              labelText="Emergency Contact Phone Number"
+              onChange={handleChange}
+              value={doctorData.emergency_contact_phone}
+            />
+            <TextInput
+              id="emergency_contact_email"
+              type="text"
+              className="inputs"
+              labelText="Emergency Contact Email"
+              onChange={handleChange}
+              value={doctorData.emergency_contact_email}
+            />
           </>
         );
       case 2:
         return (
           <>
             <TextInput
-              id="text-input-4"
+              id="medical_qualifications"
               type="text"
               className="inputs"
-              labelText="Enter your Address"
+              labelText="Medical Qualifications"
+              onChange={handleChange}
+              value={doctorData.medical_qualifications}
             />
-            <Select
-              className="inputs"
-              id="select-4"
-              labelText="Select your Gender"
-              defaultValue="option-1"
-            >
-              <SelectItem value="option-1" text="Male" />
-              <SelectItem value="option-2" text="Female" />
-              <SelectItem value="option-3" text="Other" />
-            </Select>
             <TextInput
-              id="text-input-6"
+              id="years_of_experience"
               type="text"
               className="inputs"
-              labelText="Enter your Occupation"
+              labelText="Years of Experience"
+              onChange={handleChange}
+              value={doctorData.years_of_experience}
+            />
+            <TextInput
+              id="current_practice_location"
+              type="text"
+              className="inputs"
+              labelText="Current Practice Location"
+              onChange={handleChange}
+              value={doctorData.current_practice_location}
             />
           </>
         );
@@ -158,60 +267,112 @@ function Doctor() {
         return (
           <>
             <TextInput
-              id="text-input-6"
+              id="professional_associations"
               type="text"
               className="inputs"
-              labelText="Enter your Occupation"
+              labelText="Professional Associations"
+              onChange={handleChange}
+              value={doctorData.professional_associations}
             />
-            <Select
+            <TextInput
+              id="research_interests"
+              type="text"
               className="inputs"
-              id="select-4"
-              labelText="Select your Gender"
-              defaultValue="option-1"
-            >
-              <SelectItem value="option-1" text="Male" />
-              <SelectItem value="option-2" text="Female" />
-              <SelectItem value="option-3" text="Other" />
-            </Select>
+              labelText="Research Interests"
+              onChange={handleChange}
+              value={doctorData.research_interests}
+            />
           </>
         );
       case 4:
         return (
           <>
             <TextInput
-              id="text-input-7"
+              id="insurance_provider"
               type="text"
               className="inputs"
-              labelText="Enter your Nationality"
+              labelText="Insurance Provider"
+              onChange={handleChange}
+              value={doctorData.insurance_provider}
             />
             <TextInput
-              id="text-input-8"
+              id="policy_number"
               type="text"
               className="inputs"
-              labelText="Enter your Age"
+              labelText="Policy Number"
+              onChange={handleChange}
+              value={doctorData.policy_number}
+            />
+            <TextInput
+              id="group_number"
+              type="text"
+              className="inputs"
+              labelText="Group Number"
+              onChange={handleChange}
+              value={doctorData.group_number}
+            />
+            <TextInput
+              id="coverage_details"
+              type="text"
+              className="inputs"
+              labelText="Coverage Details"
+              onChange={handleChange}
+              value={doctorData.coverage_details}
             />
           </>
         );
       case 5:
-        return(
-        <>
-          <Heading>I agree</Heading>
-          <TextInput
-          id="text-input-8"
-          type="text"
-          className="inputs"
-          labelText="Enter your Age"
-        />
-        </>
+        return (
+          <>
+            <TextInput
+              id="hospital_affiliation"
+              type="text"
+              className="inputs"
+              labelText="Hospital Affiliation"
+              onChange={handleChange}
+              value={doctorData.hospital_affiliation}
+            />
+            <TextInput
+              id="languages_spoken"
+              type="text"
+              className="inputs"
+              labelText="Languages Spoken"
+              onChange={handleChange}
+              value={doctorData.languages_spoken}
+            />
+          </>
         );
-
+      case 6:
+        return (
+          <>
+            <PasswordInput
+              id="password"
+              labelText="Password"
+              onChange={handleChange}
+              value={doctorData.password}
+            />
+            <PasswordInput
+              id="confirm_password"
+              labelText="Confirm Password"
+              // onChange={handleChange}
+              // value={doctorData.confirm_password}
+            />
+            <Checkbox
+              id="enable_2fa"
+              labelText="Enable Two-Factor Authentication"
+              onChange={handleChange}
+              checked={doctorData.enable_2fa}
+            />
+          </>
+        );
       default:
         return null;
     }
   };
+  
 
   return (
-    <div className="patient-reg">
+    <div className="doctor-reg">
       <ToastContainer />
       <div className="reg-body">
         <Header>
@@ -234,11 +395,11 @@ function Doctor() {
               <BackBtn /> Back
             </Link>
           </section>
-          <h4>Personal Information</h4>
+          <h4>Doctor Registration</h4>
         </Header>
         <section className="reg-form">
           <div className="cont">
-            <h4 className="reg-title">Register Clinician Account</h4>
+            <h4 className="reg-title">Register Doctor Account</h4>
             <h4>Please fill in your details.</h4>
             <div className="my-form">
               {isSubmitting ? (
@@ -249,7 +410,7 @@ function Doctor() {
                 <Form
                   aria-label="Registration form"
                   className="form"
-                  onSubmit={handleSubmitData}
+                  onSubmit={handleSubmit}
                 >
                   {renderFormFields()}
                   <div className="flex-btns">
@@ -263,14 +424,14 @@ function Doctor() {
                     >
                       Previous
                     </Button>
-                    {currentStep < totalSteps ? (
+                    {currentStep < totalSteps - 1 ? (
                       <Button
                         kind="secondary"
                         size="sm"
                         renderIcon={ArrowRight}
                         className="some-class"
-                        onClick={handleNext}
                         type="button"
+                        onClick={handleNext}
                       >
                         Next
                       </Button>
@@ -299,4 +460,4 @@ function Doctor() {
   );
 }
 
-export default Doctor;
+export default DoctorRegistration;

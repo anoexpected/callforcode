@@ -1,5 +1,5 @@
 .option-card {
-    border: 2px solid var(--secondary-color);
+    border: 2px solid var(--secondary-color-2);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -15,16 +15,16 @@
 
 }
 .option-card:hover > .opt-description{
-    color: var(--secondary-color-2);
+    color: var(--secondary-color);
 }
 .option-icon {
     height: 100%;
     width: 100px;
-    background-color: var(--tertiary-color);
+    background-color: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary-color);
+    color: var(--secondary-color-2);
 }
 
 .option-info {

@@ -6,7 +6,7 @@ import { ArrowLeft } from "@carbon/icons-react";
 import Image from "next/image";
 function SignIn() {
   return (
-    <div style={{overflowX:"hidden"}}>
+    <div style={{ overflowX: "hidden" }}>
       <OnboardingHeader>
         <div className="logo">
           <Image
@@ -27,14 +27,17 @@ function SignIn() {
         <section className="log-in">
           <h4 className="log-in">
             No Account yet ?
-            <Link className="link" href="../../welcome-to-medlink/auth/sign-up" >
+            <Link className="link" href="../../welcome-to-medlink/auth/sign-up">
               Sign up
             </Link>
           </h4>
         </section>
       </OnboardingHeader>
       <section className="signin-container">
-        <SignInForm />
+        <div className="svg-part"></div>
+        <div className="form-part">
+          <SignInForm />
+        </div>
       </section>
     </div>
   );

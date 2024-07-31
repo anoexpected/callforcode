@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.scss";
 import { Button, Heading } from "@carbon/react";
 import { Calendar } from "@carbon/icons-react";
-import AppointmentModal from "../AppointmentModal"; // Ensure this path is correct
+import AppointmentModal from "../AppointmentModal"; 
 
 function AppointmentDoctors({ doctor, selectedAppointment, setSelectedAppointment }) {
   const [makeBooking, setMakeBooking] = useState(false);
@@ -19,7 +19,7 @@ function AppointmentDoctors({ doctor, selectedAppointment, setSelectedAppointmen
         week.push({
           day: days[dayIndex - 1],
           date: date.getDate(),
-          fullDate: date.toDateString(), // Full date to pass to modal
+          fullDate: date.toDateString(), 
         });
       }
     }
@@ -30,7 +30,7 @@ function AppointmentDoctors({ doctor, selectedAppointment, setSelectedAppointmen
 
   const handleDateClick = (date) => {
     if (selectedAppointment && selectedAppointment.doctorId === doctor.id && selectedAppointment.date === date) {
-      setSelectedAppointment(null); // Deselect if clicking the same date
+      setSelectedAppointment(null); 
     } else {
       setSelectedAppointment({ doctorId: doctor.id, doctorName: doctor.name, speciality: doctor.speciality, date });
     }

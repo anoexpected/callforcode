@@ -50,7 +50,8 @@ function SignUp() {
         </section>
       </OnboardingHeader>
       <section className="sign-up-container">
-        <section className="join-us">
+       <div className="form-part">
+       <section className="join-us">
           <h4 className="signup-title">Join Us today and explore features made for you</h4>
           <h4 className="signup-description">
             We cater for clinicians and patients because we believe <br /> in providing
@@ -69,6 +70,8 @@ function SignUp() {
             ))}
           </div>
         </section>
+       </div>
+       <div className="svg-part"></div>
       </section>
     </div>
   );

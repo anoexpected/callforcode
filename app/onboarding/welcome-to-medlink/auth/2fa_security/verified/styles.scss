@@ -54,7 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('../../../../../public/svg/signin2.svg');
+    background-image: url('../../../../../../public/svg/changepassword.svg');
     background-color: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -70,6 +70,13 @@
     justify-content: center;
     // border: 1px solid black;
 
+}
+.flex-complete{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 @media screen and (max-width:1200px) {
     .form{

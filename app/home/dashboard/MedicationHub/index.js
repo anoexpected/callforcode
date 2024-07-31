@@ -192,7 +192,7 @@ function MedicationHub({ handleBackToDashboard }) {
       setTimeout(() => {
         setCurrentPage(currentPage - 1);
         setLoading(false);
-      }, 1000); // Simulating a delay of 1 second for demonstration
+      }, 1000); 
     }
   };
 const [isMobile, setMobile] = useState(false);

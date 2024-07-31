@@ -65,18 +65,13 @@ function Appointments() {
   const [pageSize, setPageSize] = useState(6);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   useEffect(() => {
-    // Check if the page has already been refreshed
     const hasRefreshed = localStorage.getItem("hasRefreshed");
   
     if (!hasRefreshed) {
-      // Set the flag in localStorage to indicate the page has been refreshed
       localStorage.setItem("hasRefreshed", "true");
-      // Set the selected item to 'help'
       localStorage.setItem("selectedItem", "appointments");
-      // Reload the page
       window.location.reload();
     } else {
-      // Clear the flag so it doesn't persist
       localStorage.setItem("hasRefreshed", "true");
     }
   }, []);
@@ -84,7 +79,7 @@ function Appointments() {
 
   const handleTagClick = (tag) => {
     setSelectedTag(tag);
-    setCurrentPage(1); // Reset to the first page when changing tags
+    setCurrentPage(1);
   };
 
   const handlePageChange = ({ page, pageSize }) => {

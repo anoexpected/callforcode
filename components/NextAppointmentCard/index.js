@@ -2,7 +2,6 @@ import React from "react";
 import "./styles.scss";
 import { Button, Heading } from "@carbon/react";
 import { Information, TrashCan } from "@carbon/icons-react";
-// import { ToastContainer, toast } from 'react-toastify';
 
 function NextAppCard({docImage, test, name, date}) {
   

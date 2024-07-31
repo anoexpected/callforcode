@@ -26,18 +26,13 @@ function Dashboard() {
   const [contentLoading, setContentLoading] = useState(false);
 
   useEffect(() => {
-    // Check if the page has already been refreshed
     const hasRefreshed = localStorage.getItem("hasRefreshed");
   
     if (!hasRefreshed) {
-      // Set the flag in localStorage to indicate the page has been refreshed
       localStorage.setItem("hasRefreshed", "true");
-      // Set the selected item to 'help'
       localStorage.setItem("selectedItem", "dashboard");
-      // Reload the page
       window.location.reload();
     } else {
-      // Clear the flag so it doesn't persist
       localStorage.setItem("hasRefreshed", "true");
     }
   }, []);
@@ -54,7 +49,7 @@ function Dashboard() {
     setTimeout(() => {
       setshowHealthStatus(true);
       setContentLoading(false);
-    }, 1000); // Simulate loading time
+    }, 1000); 
   };
 
   const handleAppointmentClick = () => {
@@ -62,14 +57,14 @@ function Dashboard() {
     setTimeout(() => {
       setShowAppointment(true);
       setContentLoading(false);
-    }, 1000); // Simulate loading time
+    }, 1000);
   };
   const handleMedicationhubClick = () => {
     setContentLoading(true);
     setTimeout(() => {
       setshowMedicationHub(true);
       setContentLoading(false);
-    }, 1000); // Simulate loading time
+    }, 1000); 
   };
 
   const handleBackToDashboard = () => {
@@ -79,7 +74,7 @@ function Dashboard() {
       setshowMedicationHub(false);
       setShowAppointment(false);
       setContentLoading(false);
-    }, 1000); // Simulate loading time
+    }, 1000); 
   };
 
   if (contentLoading) {
@@ -106,7 +101,7 @@ function Dashboard() {
         <div className="top-dash">
           <div className="med_cards">
             <Tile
-              onClick={handleHealthStatusClick} // Add onClick handler here
+              onClick={handleHealthStatusClick}
               id="tile-1"
               className="med-card"
               style={{ cursor: "pointer", width: "100%" }}
@@ -163,7 +158,7 @@ function Dashboard() {
               tileCollapsedIconText="Check all about your medication"
               tileExpandedIconText="Check all about your medication"
               expanded={true}
-              onClick={handleMedicationhubClick} // Add onClick handler here
+              onClick={handleMedicationhubClick}
             >
               <TileAboveTheFoldContent>
                 <div

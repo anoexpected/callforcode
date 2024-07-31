@@ -123,8 +123,8 @@ function PatientRegistration() {
           .then((data) => {
             Swal.close();
             toast.success("Registration successful! Redirecting to home...");
-            localStorage.removeItem("patientData"); // Clear saved data
-            window.location.href = "/home"; // Redirect to home after submission
+            localStorage.removeItem("patientData"); 
+            window.location.href = "/home"; 
           })
           .catch((error) => {
             Swal.close();
@@ -158,7 +158,6 @@ function PatientRegistration() {
                 placeholder="MM/DD/YYYY"
                 onChange={handleChange}
                 value={patientData.date_of_birth}
-                // value={new Date()}
               />
             </DatePicker>
             <TextInput
@@ -455,7 +454,6 @@ function PatientRegistration() {
             <div className="my-form">
               {isSubmitting ? (
                 <div className="signin-progress">
-                  {/* SweetAlert will handle the progress notification */}
                 </div>
               ) : (
                 <Form

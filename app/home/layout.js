@@ -52,16 +52,16 @@ function Container({ defaSelected }) {
 
   const updateSelectedItem = () => {
     const storedItem = localStorage.getItem("selectedItem");
-    console.log("Stored item:", storedItem); // Debugging statement
-    console.log("Default selected:", defaSelected); // Debugging statement
+    console.log("Stored item:", storedItem); 
+    console.log("Default selected:", defaSelected); 
 
     if (!storedItem) {
       setSelectedItem(defaSelected);
-      console.log("Setting default selected item:", defaSelected); // Debugging statement
+      console.log("Setting default selected item:", defaSelected); 
       localStorage.setItem("selectedItem", defaSelected);
     } else {
       setSelectedItem(storedItem);
-      console.log("Setting stored item:", storedItem); // Debugging statement
+      console.log("Setting stored item:", storedItem); 
     }
   };
 

@@ -3,22 +3,25 @@ import Swal from "sweetalert2";
 import React, { useState, useEffect } from "react";
 import { Button, Form, Heading, TextInput, ProgressBar } from "@carbon/react";
 import { signIn } from "next-auth/react";
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
+import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 function SignInForm() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setIsSigningIn(true);
-    setError('');
+    setError("");
 
     Swal.fire({
       title: "Signing you in",
@@ -31,40 +34,38 @@ function SignInForm() {
       showConfirmButton: false,
       didOpen: () => {
         Swal.showLoading();
-        axios.post('http://127.0.0.1:8000/auth/login/', {
-          email: email,
-          password: password
-        })
-        .then((response) => {
-          Swal.close();
-          if (response.data.success) {
-            toast.success(response.data.message);
-            let progressInterval = setInterval(() => {
-              setProgress((prevProgress) => {
-                if (prevProgress >= 100) {
-                  clearInterval(progressInterval);
-                  window.location.href = "/home"; // Redirect to the home page on success
-                  return 100;
-                }
-                return prevProgress + 1;
-              });
-            }, 30);
-          } else {
-            setError(response.data.message || 'Sign-in failed');
-            toast.error(`Sign-in failed: ${response.data.message}`);
+        axios
+          .post("http://127.0.0.1:8000/auth/login/", {
+            email: email,
+            password: password,
+          })
+          .then((response) => {
+            Swal.close();
+            if (response.data.success) {
+              if (response.data.message === '2FA code sent') {
+                toast.success('2FA code sent. Redirecting to 2FA verification page...');
+                setTimeout(() => {
+                  router.push(`/onboarding/welcome-to-medlink/auth/2fa_security/?email=${encodeURIComponent(email)}`); 
+                }, 1500); 
+              } else {
+                toast.success(response.data.message);
+                window.location.href = "/home";
+              }
+            } else {
+              setError(response.data.message || "Sign-in failed");
+              toast.error(`Sign-in failed: ${response.data.message}`);
+              setIsSigningIn(false);
+            }
+          })
+          .catch((error) => {
+            Swal.close();
+            setError("An error occurred during sign-in.");
+            toast.error("An error occurred during sign-in.");
             setIsSigningIn(false);
-          }
-        })
-        .catch((error) => {
-          Swal.close();
-          setError('An error occurred during sign-in.');
-          toast.error('An error occurred during sign-in.');
-          setIsSigningIn(false);
-        });
+          });
       },
     });
-};
-
+  };
 
   useEffect(() => {
     if (isSigningIn) {
@@ -117,7 +118,9 @@ function SignInForm() {
         Sign In
       </Button>
       {error && <p className="error-message">{error}</p>}
-      <p className="forgot-password">forgot password?</p>
+      <Link className="forgot-password" href="../../welcome-to-medlink/auth/password/request">
+        <p className="forgot-password">forgot password?</p>
+      </Link>
       <Heading className="or-container">
         <hr className="or-line" />
         <span className="or-text">OR</span>
@@ -137,7 +140,7 @@ function SignInForm() {
   return (
     <div className="signin-form">
       <ToastContainer />
-       <MyForm />
+      <MyForm />
     </div>
   );
 }
