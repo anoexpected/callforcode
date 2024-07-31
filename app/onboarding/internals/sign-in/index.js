@@ -1,7 +1,7 @@
-"use client";
+"use client"
 import Swal from "sweetalert2";
-import React, { useState, useEffect } from "react";
-import { Button, Form, Heading, TextInput, ProgressBar } from "@carbon/react";
+import React, { useRef, useState } from "react";
+import { Button, Form, Heading, TextInput } from "@carbon/react";
 import { signIn } from "next-auth/react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,17 +11,18 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
 function SignInForm() {
-  const [isSigningIn, setIsSigningIn] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
   const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setIsSigningIn(true);
     setError("");
+
+    // Access form values through refs
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
 
     Swal.fire({
       title: "Signing you in",
@@ -35,10 +36,7 @@ function SignInForm() {
       didOpen: () => {
         Swal.showLoading();
         axios
-          .post("http://127.0.0.1:8000/auth/login/", {
-            email: email,
-            password: password,
-          })
+          .post("http://127.0.0.1:8000/auth/login/", { email, password })
           .then((response) => {
             Swal.close();
             if (response.data.success) {
@@ -54,32 +52,16 @@ function SignInForm() {
             } else {
               setError(response.data.message || "Sign-in failed");
               toast.error(`Sign-in failed: ${response.data.message}`);
-              setIsSigningIn(false);
             }
           })
           .catch((error) => {
             Swal.close();
             setError("An error occurred during sign-in.");
-            toast.error("An error occurred during sign-in.");
-            setIsSigningIn(false);
+            toast.error("An error occurred during sign-in:", error);
           });
       },
     });
   };
-
-  useEffect(() => {
-    if (isSigningIn) {
-      let progressInterval = setInterval(() => {
-        setProgress((prevProgress) => {
-          if (prevProgress >= 100) {
-            clearInterval(progressInterval);
-            return 100;
-          }
-          return prevProgress + 1;
-        });
-      }, 30);
-    }
-  }, [isSigningIn]);
 
   const MyForm = () => (
     <Form
@@ -99,20 +81,21 @@ function SignInForm() {
       </Heading>
       <TextInput
         id="email"
+        name="email"
         type="email"
         className="inputs"
         labelText="Enter your Address"
         placeholder="Email Address"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        ref={emailRef}
       />
       <TextInput
+        id="password"
+        name="password"
         className="inputs"
         labelText="Enter your Password"
         type="password"
         placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        ref={passwordRef}
       />
       <Button size="sm" type="submit" className="btns">
         Sign In

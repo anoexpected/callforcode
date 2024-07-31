@@ -3,10 +3,11 @@ import './styles.scss';
 import { ArrowRight } from '@carbon/icons-react';
 import Link from 'next/link';
 
-function OptionCard({ icon, title, description, href }) {
+function OptionCard({ icon, title, description, href, disabled }) {
+  
   return (
-    <Link href={href}>
-    <div className='option-card'>
+    <Link className={`${disabled ? 'disabled' : ''}`} href={href} >
+    <div className={`option-card ${disabled ? 'disabled' : ''}`}>
       <div className='option-icon'>{icon}</div>
       <div className='option-info'>
         <div className='option-info-flex'>
@@ -15,7 +16,8 @@ function OptionCard({ icon, title, description, href }) {
         </div>
         <div className='arrow'><ArrowRight size={32} /></div>
       </div>
-    </div></Link>
+    </div>
+    </Link>
   );
 }
 

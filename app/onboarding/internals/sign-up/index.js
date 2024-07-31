@@ -13,14 +13,17 @@ function SignUp() {
       title: "Patient",
       description: "Personal Account",
       icon: <HospitalBed size={32} />,
-      link:"../../welcome-to-medlink/auth/sign-up/patient"
+      link:"../../welcome-to-medlink/auth/sign-up/patient",
+      disabled: false,
     },
     {
       id: 2,
       title: "Clinician",
       description: "Clinician and care center account",
       icon: <Hospital size={32} />,
-      link:"../../welcome-to-medlink/auth/sign-up/doctor"
+      link:"../../welcome-to-medlink/auth/sign-up/doctor",
+      disabled:true,
+      
     },
   ];
 
@@ -66,6 +69,7 @@ function SignUp() {
                 icon={option.icon}
                 description={option.description}
                 title={option.title}
+                disabled={option.disabled}
               />
             ))}
           </div>
