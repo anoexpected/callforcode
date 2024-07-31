@@ -448,6 +448,7 @@ function PatientRegistration() {
           <h4>Patient Registration</h4>
         </Header>
         <section className="reg-form">
+          <div className="svg-part"></div>
           <div className="cont">
             <h4 className="reg-title">Register Patient Account</h4>
             <h4>Please fill in your details.</h4>
@@ -499,7 +500,7 @@ function PatientRegistration() {
               )}
             </div>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </section>
       </div>
       <section className="reg-progress">

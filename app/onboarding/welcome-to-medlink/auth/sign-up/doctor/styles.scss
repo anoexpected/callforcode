@@ -33,7 +33,7 @@
   height: 100vh;
 //   border: 1px solid blue;
 border-left: 1px dashed var(--primary-color);
-  background-color: var(--tertiary-color);
+  background-color: var(--secondary-color-2);
   padding: 20px;
   position: relative;
   display: flex;
@@ -103,23 +103,38 @@ border-left: 1px dashed var(--primary-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  width: 100%;
 
 }
+
+.svg-part{
+  height: 100%;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../../../../../public/svg/createaccount.svg');
+  background-color: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  // border: 1px solid red;
+}
 .cont{
-  width: 100%;
+  width: 40%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: auto;
   flex-direction: column;
+  background-color: var(--tertiary-color);
 }
 .reg-form {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-direction: column;
+  // flex-direction: column;
   background-color: var(--tertiary-color);
   height: calc(100vh - 10vh);
 }
@@ -129,7 +144,7 @@ border-left: 1px dashed var(--primary-color);
     height: auto;
     border-radius: 10px;
     padding: 10px;
-    background-color: var(--secondary-color-2);
+    // background-color: var(--secondary-color-2);
     margin: 20px;
 }
 .flex-btns{
@@ -156,7 +171,8 @@ border-left: 1px dashed var(--primary-color);
   gap: 20px;
   padding: 20px;
   cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.8); 
+  // background-color: rgba(255, 255, 255, 0.8); 
+  background-color: var(--secondary-color-2);
 }
 .logo-progress{
   width: 200px;
