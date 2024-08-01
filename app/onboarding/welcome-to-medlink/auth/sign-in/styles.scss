@@ -9,6 +9,13 @@
     // background-size: cover;
     // background-repeat: no-repeat;
 }
+.log-in{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: auto;
+}
 .logo{
     display: flex;
     align-items: center;
@@ -23,6 +30,7 @@
 }
 .link{
     font-weight: bold;
+    width: auto;
 }
 .request-form{
     width: 100%;

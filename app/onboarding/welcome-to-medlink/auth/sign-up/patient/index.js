@@ -20,6 +20,7 @@ import {
   Checkbox,
   Stack,
   PasswordInput,
+  Loading,
 } from "@carbon/react";
 import { PatientProgressSteps } from "../progress";
 import Link from "next/link";
@@ -123,8 +124,8 @@ function PatientRegistration() {
           .then((data) => {
             Swal.close();
             toast.success("Registration successful! Redirecting to home...");
-            localStorage.removeItem("patientData"); 
-            window.location.href = "/home"; 
+            localStorage.removeItem("patientData");
+            window.location.href = "/home";
           })
           .catch((error) => {
             Swal.close();
@@ -420,7 +421,7 @@ function PatientRegistration() {
         return null;
     }
   };
-
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div className="patient-reg">
       <ToastContainer />
@@ -442,7 +443,15 @@ function PatientRegistration() {
                 gap: "10px",
               }}
             >
-              <BackBtn /> Back
+              {isLoading ? (
+                <>
+                  <Loading withOverlay={false} small /> Back
+                </>
+              ) : (
+                <>
+                  <BackBtn /> Back
+                </>
+              )}{" "}
             </Link>
           </section>
           <h4>Patient Registration</h4>
@@ -454,8 +463,7 @@ function PatientRegistration() {
             <h4>Please fill in your details.</h4>
             <div className="my-form">
               {isSubmitting ? (
-                <div className="signin-progress">
-                </div>
+                <div className="signin-progress"></div>
               ) : (
                 <Form
                   aria-label="Registration form"

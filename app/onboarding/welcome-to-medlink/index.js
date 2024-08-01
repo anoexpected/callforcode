@@ -1,19 +1,39 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from 'react-dom';
-import "./styles.sass"; 
+import ReactDOM from "react-dom";
+import "./styles.sass";
 import "./styles.scss";
-import { Button, Modal } from "@carbon/react";
-import Link from "next/link";
+import { Button, Modal, Loading } from "@carbon/react";
 import Head from "next/head";
 import { Space, PageHeader, Typography, Steps } from "@arco-design/web-react";
-import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "@carbon/icons-react";
 
 const Step = Steps.Step;
 
-const ModalStateManager = ({ renderLauncher: LauncherContent, children: ModalContent }) => {
+const useLoadingNavigation = (path) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    router.push(path);
+  };
+
+  useEffect(() => {
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
+
+  return [isLoading, handleClick];
+};
+
+const ModalStateManager = ({
+  renderLauncher: LauncherContent,
+  children: ModalContent,
+}) => {
   const [open, setOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -23,7 +43,12 @@ const ModalStateManager = ({ renderLauncher: LauncherContent, children: ModalCon
 
   return (
     <>
-      {isClient && ModalContent && ReactDOM.createPortal(<ModalContent open={open} setOpen={setOpen} />, document.body)}
+      {isClient &&
+        ModalContent &&
+        ReactDOM.createPortal(
+          <ModalContent open={open} setOpen={setOpen} />,
+          document.body
+        )}
       {LauncherContent && <LauncherContent open={open} setOpen={setOpen} />}
     </>
   );
@@ -37,7 +62,7 @@ const FeaturesModal = ({ open, setOpen }) => {
   };
 
   const handleSkip = () => {
-    router.push('/onboarding/welcome-to-medlink/auth/sign-up');
+    router.push("/onboarding/welcome-to-medlink/auth/sign-up");
   };
 
   return (
@@ -69,7 +94,15 @@ const FeaturesModal = ({ open, setOpen }) => {
           <img src="../../../auth-img/img1.jpg" />
         </div>
         <div className="feature">
-          <h3 style={{fontWeight:"bold", fontSize:"20px", fontFamily:"ink-jet"}}>Welcome to Medlink</h3>
+          <h3
+            style={{
+              fontWeight: "bold",
+              fontSize: "20px",
+              fontFamily: "ink-jet",
+            }}
+          >
+            Welcome to Medlink
+          </h3>
           <p>Your Virtual Medical Clinic!</p>
           <img className="feature-img" src="../../../logov2.svg" />
         </div>
@@ -79,6 +112,18 @@ const FeaturesModal = ({ open, setOpen }) => {
 };
 
 function Welcome() {
+  const [isLoadingSignUp, handleSignUpClick] = useLoadingNavigation("/onboarding/welcome-to-medlink/auth/sign-up");
+  const [isLoadingSignIn, handleSignInClick] = useLoadingNavigation("/onboarding/welcome-to-medlink/auth/sign-in");
+  const [isLoadingExplore, setIsLoadingExplore] = useState(false);
+  const [isLoadingGetStarted, handleGetStartedClick] = useLoadingNavigation("/onboarding/welcome-to-medlink/auth/sign-up");
+
+  const handleExploreClick = () => {
+    setIsLoadingExplore(true);
+    setTimeout(() => {
+      setIsLoadingExplore(false);
+    }, 2000);
+  };
+
   return (
     <div className="welcome-page">
       <div className="welcome-body">
@@ -111,16 +156,48 @@ function Welcome() {
                     </ul>
                   </div>
                   <div className="onboarding-buttons">
-                    <Link href="../../../onboarding/welcome-to-medlink/auth/sign-in">
-                      <Button size="sm" kind="secondary">
-                        Sign in
-                      </Button>
-                    </Link>
-                    <Link href="../../../onboarding/welcome-to-medlink/auth/sign-up">
-                      <Button size="sm" kind="primary">
-                        Sign up
-                      </Button>
-                    </Link>
+                    <Button
+                      size="sm"
+                      kind="secondary"
+                      onClick={handleSignInClick}
+                      disabled={isLoadingSignIn}
+                    >
+                      {isLoadingSignIn ? (
+                        <>
+                          <Loading
+                            small={true}
+                            className={"some-class"}
+                            withOverlay={false}
+                          />
+                          <span style={{ marginLeft: "8px" }}>
+                            Signing in...
+                          </span>
+                        </>
+                      ) : (
+                        "Sign in"
+                      )}
+                    </Button>
+                    <Button
+                      size="sm"
+                      kind="primary"
+                      onClick={handleSignUpClick}
+                      disabled={isLoadingSignUp}
+                    >
+                      {isLoadingSignUp ? (
+                        <>
+                          <Loading
+                            small={true}
+                            className={"some-class"}
+                            withOverlay={false}
+                          />
+                          <span style={{ marginLeft: "8px" }}>
+                            Signing up...
+                          </span>
+                        </>
+                      ) : (
+                        "Sign up"
+                      )}
+                    </Button>
                   </div>
                 </section>
               </Space>
@@ -139,9 +216,23 @@ function Welcome() {
                   kind="primary"
                   size="sm"
                   className="start-button"
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    handleExploreClick();
+                    setOpen(true);
+                  }}
                 >
-                  Explore our Features
+                  {isLoadingExplore ? (
+                    <>
+                      <Loading
+                        small={true}
+                        className={"some-class"}
+                        withOverlay={false}
+                      />
+                      <span style={{ marginLeft: "8px" }}>Loading...</span>
+                    </>
+                  ) : (
+                    "Explore our Features"
+                  )}
                 </Button>
               )}
             >
@@ -176,12 +267,30 @@ function Welcome() {
           </div>
 
           <div className="index-footer">
-            <div style={{fontSize:"1.5rem", marginBottom:"20px"}}>
+            <div style={{ fontSize: "1.5rem", marginBottom: "20px" }}>
               <strong>Medlink</strong> | Your Virtual Medical Clinic
             </div>
-            <Link href="../../../onboarding/welcome-to-medlink/auth/sign-in">
-              <Button type="text" kind="secondary" renderIcon={ArrowRight} size="sm">Get started free</Button>
-            </Link>
+            <Button
+              type="text"
+              kind="secondary"
+              renderIcon={ArrowRight}
+              size="sm"
+              onClick={handleGetStartedClick}
+              disabled={isLoadingGetStarted}
+            >
+              {isLoadingGetStarted ? (
+                <>
+                  <Loading
+                    small={true}
+                    className={"some-class"}
+                    withOverlay={false}
+                  />
+                  <span style={{ marginLeft: "8px" }}>Loading...</span>
+                </>
+              ) : (
+                "Get started free"
+              )}
+            </Button>
           </div>
         </div>
       </div>

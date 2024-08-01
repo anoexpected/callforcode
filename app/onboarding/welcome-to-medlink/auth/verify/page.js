@@ -5,9 +5,11 @@ import "./styles.scss";
 import Link from "next/link";
 import { ArrowLeft } from "@carbon/icons-react";
 import Image from "next/image";
-import './styles.scss'
+import "./styles.scss";
 import OnboardingHeader from "@/app/onboarding/internals/header";
-const page = () => {
+import { Loading } from "@carbon/react";
+function Page() {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
       <div style={{ overflowX: "hidden" }}>
@@ -22,8 +24,17 @@ const page = () => {
             />
             <Link href="../../../welcome-to-medlink/auth/sign-in">
               {" "}
-              <section className="back">
-                <ArrowLeft size={32} /> Back
+              <section className="back" onClick={() => setIsLoading(true)}>
+                {isLoading ? (
+                  <>
+                    <Loading small withOverlay={false} />
+                    Back
+                  </>
+                ) : (
+                  <>
+                    <ArrowLeft size={32} /> Back
+                  </>
+                )}
               </section>
             </Link>
           </div>
@@ -46,6 +57,6 @@ const page = () => {
       </div>
     </div>
   );
-};
+}
 
-export default page;
+export default Page;

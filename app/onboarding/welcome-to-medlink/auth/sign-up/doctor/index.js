@@ -20,6 +20,7 @@ import {
   Checkbox,
   Stack,
   PasswordInput,
+  Loading,
 } from "@carbon/react";
 import { DoctorProgressSteps } from "../progress";
 import Link from "next/link";
@@ -146,22 +147,25 @@ function DoctorRegistration() {
               onChange={handleChange}
               value={doctorData.name}
             />
-           <Stack> <TextInput
-              id="gender"
-              type="text"
-              className="inputs"
-              labelText="Gender"
-              onChange={handleChange}
-              value={doctorData.gender}
-            />
-            <TextInput
-              id="address"
-              type="text"
-              className="inputs"
-              labelText="Address"
-              onChange={handleChange}
-              value={doctorData.address}
-            /></Stack>
+            <Stack>
+              {" "}
+              <TextInput
+                id="gender"
+                type="text"
+                className="inputs"
+                labelText="Gender"
+                onChange={handleChange}
+                value={doctorData.gender}
+              />
+              <TextInput
+                id="address"
+                type="text"
+                className="inputs"
+                labelText="Address"
+                onChange={handleChange}
+                value={doctorData.address}
+              />
+            </Stack>
             <DatePicker datePickerType="single" dateFormat="Y-m-d">
               <DatePickerInput
                 id="date_of_birth"
@@ -369,8 +373,8 @@ function DoctorRegistration() {
         return null;
     }
   };
-  
 
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div className="doctor-reg">
       <ToastContainer />
@@ -391,8 +395,17 @@ function DoctorRegistration() {
                 justifyContent: "space-between",
                 gap: "10px",
               }}
+              onClick={() => setIsLoading(true)}
             >
-              <BackBtn /> Back
+              {isLoading ? (
+                <>
+                  <Loading withOverlay={false} small /> Back
+                </>
+              ) : (
+                <>
+                  <BackBtn /> Back
+                </>
+              )}
             </Link>
           </section>
           <h4>Doctor Registration</h4>

@@ -1,12 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import PasswordComplete from "./index";
 import "./styles.scss";
 import Link from "next/link";
 import { ArrowLeft } from "@carbon/icons-react";
 import Image from "next/image";
 import OnboardingHeader from "@/app/onboarding/internals/header";
-const page = () => {
+import { Heading, Loading } from "@carbon/react";
+function Page() {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
       <div style={{ overflowX: "hidden" }}>
@@ -21,22 +23,23 @@ const page = () => {
             />
             <Link href="../../../welcome-to-medlink/auth/sign-in">
               {" "}
-              <section className="back">
-                <ArrowLeft size={32} /> Back
+              <section className="back" onClick={() => setIsLoading(true)}>
+                {isLoading ? (
+                  <>
+                    <Loading small withOverlay={false} />
+                    Back
+                  </>
+                ) : (
+                  <>
+                    <ArrowLeft size={32} /> Back
+                  </>
+                )}
               </section>
             </Link>
           </div>
 
           <section className="log-in">
-            <h4 className="log-in">
-              No Account yet ?
-              <Link
-                className="link"
-                href="../../welcome-to-medlink/auth/sign-up"
-              >
-                Sign up
-              </Link>
-            </h4>
+          <Heading>Password Reset Completed</Heading>
           </section>
         </OnboardingHeader>
         <section className="signin-container">
@@ -45,6 +48,6 @@ const page = () => {
       </div>
     </div>
   );
-};
+}
 
-export default page;
+export default Page;

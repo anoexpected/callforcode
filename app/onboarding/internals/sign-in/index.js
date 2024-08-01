@@ -1,14 +1,65 @@
-"use client"
+"use client";
 import Swal from "sweetalert2";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Button, Form, Heading, TextInput } from "@carbon/react";
 import { signIn } from "next-auth/react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
-import Link from "next/link";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+
+const useLoadingNavigation = (path) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    router.push(path);
+  };
+
+  useEffect(() => {
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
+
+  return [isLoading, handleClick];
+};
+
+const use2FARedirect = () => {
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const router = useRouter();
+
+  const redirect2FA = (email) => {
+    setIsRedirecting(true);
+    Swal.fire({
+      title: "Redirecting to 2FA",
+      text: "Please wait while we redirect you to the 2FA verification page...",
+      imageUrl: "/logov2.svg",
+      imageWidth: 70,
+      imageHeight: 70,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    setTimeout(() => {
+      setIsRedirecting(false);
+      Swal.close();
+      router.push(
+        `/onboarding/welcome-to-medlink/auth/2fa_security/?email=${encodeURIComponent(
+          email
+        )}`
+      );
+    }, 2000);
+  };
+
+  return [isRedirecting, redirect2FA];
+};
 
 function SignInForm() {
   const emailRef = useRef(null);
@@ -16,11 +67,15 @@ function SignInForm() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const [isLoadingForgotPassword, handleForgotPasswordClick] =
+    useLoadingNavigation("../../welcome-to-medlink/auth/password/request");
+  const [isLoadingGoogleSignIn, setIsLoadingGoogleSignIn] = useState(false);
+  const [isRedirecting2FA, redirect2FA] = use2FARedirect();
+
   const handleSignIn = async (e) => {
     e.preventDefault();
     setError("");
 
-    // Access form values through refs
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
@@ -40,14 +95,14 @@ function SignInForm() {
           .then((response) => {
             Swal.close();
             if (response.data.success) {
-              if (response.data.message === '2FA code sent') {
-                toast.success('2FA code sent. Redirecting to 2FA verification page...');
-                setTimeout(() => {
-                  router.push(`/onboarding/welcome-to-medlink/auth/2fa_security/?email=${encodeURIComponent(email)}`); 
-                }, 1500); 
+              if (response.data.message === "2FA code sent") {
+                toast.success(
+                  "2FA code sent. Redirecting to 2FA verification page..."
+                );
+                redirect2FA(email);
               } else {
                 toast.success(response.data.message);
-                window.location.href = "/home";
+                router.push("/home");
               }
             } else {
               setError(response.data.message || "Sign-in failed");
@@ -61,6 +116,18 @@ function SignInForm() {
           });
       },
     });
+  };
+
+  const handleGoogleSignInClick = async () => {
+    setIsLoadingGoogleSignIn(true);
+    try {
+      await signIn();
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      toast.error("Error signing in with Google");
+    } finally {
+      setIsLoadingGoogleSignIn(false);
+    }
   };
 
   const MyForm = () => (
@@ -101,9 +168,13 @@ function SignInForm() {
         Sign In
       </Button>
       {error && <p className="error-message">{error}</p>}
-      <Link className="forgot-password" href="../../welcome-to-medlink/auth/password/request">
-        <p className="forgot-password">forgot password?</p>
-      </Link>
+      <Heading
+        className="forgot-password"
+        onClick={handleForgotPasswordClick}
+        disabled={isLoadingForgotPassword}
+      >
+        <p> {isLoadingForgotPassword ? "Loading..." : "Forgot password?"}</p>{" "}
+      </Heading>
       <Heading className="or-container">
         <hr className="or-line" />
         <span className="or-text">OR</span>
@@ -113,9 +184,10 @@ function SignInForm() {
         kind="secondary"
         className="btns"
         size="sm"
-        onClick={() => signIn()}
+        onClick={handleGoogleSignInClick}
+        disabled={isLoadingGoogleSignIn}
       >
-        Continue with Google
+        {isLoadingGoogleSignIn ? "Loading..." : "Continue with Google"}
       </Button>
     </Form>
   );
